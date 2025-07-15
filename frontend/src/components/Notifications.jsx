@@ -84,6 +84,7 @@ const Notifications = () => {
         const response = await axios.get(`${API_BASE_URL}/api/notifications`, {
           withCredentials: true,
         });
+        console.log(response);
         setNotifications(response.data.data);
         setError(null);
       } catch (err) {
