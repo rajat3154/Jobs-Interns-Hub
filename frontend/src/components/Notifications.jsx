@@ -229,34 +229,27 @@ const Notifications = () => {
 
           {/* Notification tabs */}
           <div className="flex overflow-x-auto gap-2 mb-6 pb-2">
-            {[
-              "all",
-              "unread",
-              "follow",
-              "application"
-            ].map(
-              (tab) => (
-                <Button
-                  key={tab}
-                  variant={activeTab === tab ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => setActiveTab(tab)}
-                  className={`rounded-full capitalize text-white ${
-                    activeTab === tab ? "bg-blue-600" : "hover:bg-gray-800"
-                  }`}
-                >
-                  {tab === "all"
-                    ? "All"
-                    : tab === "unread"
-                    ? "Unread"
-                    : tab === "follow"
-                    ? "Follows"
-                    : tab === "application"
-                    ? "Applications"
-                    : tab}
-                </Button>
-              )
-            )}
+            {["all", "unread", "follow", "application"].map((tab) => (
+              <Button
+                key={tab}
+                variant={activeTab === tab ? "default" : "ghost"}
+                size="sm"
+                onClick={() => setActiveTab(tab)}
+                className={`rounded-full capitalize text-white ${
+                  activeTab === tab ? "bg-blue-600" : "hover:bg-gray-800"
+                }`}
+              >
+                {tab === "all"
+                  ? "All"
+                  : tab === "unread"
+                  ? "Unread"
+                  : tab === "follow"
+                  ? "Follows"
+                  : tab === "application"
+                  ? "Applications"
+                  : tab}
+              </Button>
+            ))}
           </div>
 
           <AnimatePresence>
@@ -286,17 +279,25 @@ const Notifications = () => {
                 >
                   <div className="flex items-center gap-3 mb-2">
                     <Avatar className="h-9 w-9">
-                      <AvatarImage src={notification.sender?.profile?.profilePhoto} />
+                      <AvatarImage
+                        src={notification.sender?.profile?.profilePhoto}
+                      />
                       <AvatarFallback className="bg-gray-700 text-blue-400">
-                        {(notification.sender?.fullname || notification.sender?.companyname || 'U').charAt(0)}
+                        {(
+                          notification.sender?.fullname ||
+                          notification.sender?.companyname ||
+                          "U"
+                        ).charAt(0)}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex flex-col">
                       <span className="font-semibold text-white text-base truncate">
-                        {notification.sender?.fullname || notification.sender?.companyname || 'User'}
+                        {notification.sender?.fullname ||
+                          notification.sender?.companyname ||
+                          "User"}
                       </span>
                       <span className="text-xs text-gray-400 truncate">
-                        {notification.sender?.role || ''}.toUpperCase()
+                        {notification.sender?.role.toUpperCase() || ""}
                       </span>
                     </div>
                   </div>
@@ -320,9 +321,7 @@ const Notifications = () => {
                         <X className="w-4 h-4" />
                       </Button>
                     </div>
-                    <p className="text-gray-400 mt-1">
-                      {notification.message}
-                    </p>
+                    <p className="text-gray-400 mt-1">{notification.message}</p>
                     <div className="mt-2 text-sm text-gray-500">
                       {new Date(notification.createdAt).toLocaleDateString(
                         "en-US",
