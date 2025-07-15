@@ -222,7 +222,6 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
       <div className="p-4 border-b border-t border-l border-gray-800">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold text-blue-400">Chats</h2>
-         
         </div>
 
         <div className="relative">
@@ -245,7 +244,7 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
       )}
 
       {/* Users list */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto border-l border-gray-800">
         {loading ? (
           <div className="flex justify-center items-center h-20">
             <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
@@ -275,10 +274,17 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
                       <div className="relative">
                         <Avatar className="h-10 w-10">
                           <AvatarImage
-                            src={user.profilePhoto || "https://randomuser.me/api/portraits/lego/1.jpg"}
+                            src={
+                              user.profilePhoto ||
+                              "https://randomuser.me/api/portraits/lego/1.jpg"
+                            }
                           />
                           <AvatarFallback>
-                            {user.fullName?.split(" ").map(n => n[0]).join("").toUpperCase()}
+                            {user.fullName
+                              ?.split(" ")
+                              .map((n) => n[0])
+                              .join("")
+                              .toUpperCase()}
                           </AvatarFallback>
                         </Avatar>
                         {hasUnread && (
@@ -297,16 +303,22 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
                         </div>
                         {!hasUnread && latestMessage && (
                           <p className="text-xs text-gray-400 truncate">
-                            {latestMessage.senderId === authUser._id ? "You: " : ""}
+                            {latestMessage.senderId === authUser._id
+                              ? "You: "
+                              : ""}
                             {latestMessage.message}
                           </p>
                         )}
                         {!hasUnread && !latestMessage && (
-                          <p className="text-xs text-gray-400 truncate">{user.email}</p>
+                          <p className="text-xs text-gray-400 truncate">
+                            {user.email}
+                          </p>
                         )}
                         {hasUnread && (
                           <p className="text-xs text-blue-400 font-semibold mt-1">
-                            {unreadCount === 1 ? "1 new message" : `${unreadCount} new messages`}
+                            {unreadCount === 1
+                              ? "1 new message"
+                              : `${unreadCount} new messages`}
                           </p>
                         )}
                       </div>
@@ -339,10 +351,17 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
                       <div className="relative">
                         <Avatar className="h-10 w-10">
                           <AvatarImage
-                            src={user.profilePhoto || "https://randomuser.me/api/portraits/lego/5.jpg"}
+                            src={
+                              user.profilePhoto ||
+                              "https://randomuser.me/api/portraits/lego/5.jpg"
+                            }
                           />
                           <AvatarFallback>
-                            {user.fullName?.split(" ").map(n => n[0]).join("").toUpperCase()}
+                            {user.fullName
+                              ?.split(" ")
+                              .map((n) => n[0])
+                              .join("")
+                              .toUpperCase()}
                           </AvatarFallback>
                         </Avatar>
                         {hasUnread && (
@@ -361,16 +380,22 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
                         </div>
                         {!hasUnread && latestMessage && (
                           <p className="text-xs text-gray-400 truncate">
-                            {latestMessage.senderId === authUser._id ? "You: " : ""}
+                            {latestMessage.senderId === authUser._id
+                              ? "You: "
+                              : ""}
                             {latestMessage.message}
                           </p>
                         )}
                         {!hasUnread && !latestMessage && (
-                          <p className="text-xs text-gray-400 truncate">{user.email}</p>
+                          <p className="text-xs text-gray-400 truncate">
+                            {user.email}
+                          </p>
                         )}
                         {hasUnread && (
                           <p className="text-xs text-blue-400 font-semibold mt-1">
-                            {unreadCount === 1 ? "1 new message" : `${unreadCount} new messages`}
+                            {unreadCount === 1
+                              ? "1 new message"
+                              : `${unreadCount} new messages`}
                           </p>
                         )}
                       </div>
@@ -381,9 +406,7 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
             )}
           </div>
         ) : (
-          <div className="text-center text-gray-400 py-4">
-            No users found
-          </div>
+          <div className="text-center text-gray-400 py-4">No users found</div>
         )}
       </div>
 
@@ -399,7 +422,9 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
             </Avatar>
             <div>
               <h3 className="font-medium text-white">
-                {authUser?.role === "recruiter" ? authUser?.companyname : authUser?.fullName || authUser?.fullname}
+                {authUser?.role === "recruiter"
+                  ? authUser?.companyname
+                  : authUser?.fullName || authUser?.fullname}
               </h3>
               <p className="text-xs text-gray-400">
                 {authUser?.role === "student" ? "Student" : "Recruiter"}
