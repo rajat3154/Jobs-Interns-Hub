@@ -772,15 +772,58 @@ const Profile = () => {
                     <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
                   </div>
                 ) : appliedJobs.length > 0 ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {appliedJobs.map((app) => (
-                      <LatestJobCards
-                        key={app._id}
-                        job={app.job}
-                        onDetails={() => navigate(`/job/description/${app.job?._id}`)}
-                        isSaved={false}
-                      />
-                    ))}
+                  <div className="overflow-hidden rounded-lg border border-gray-700">
+                    <Table className="min-w-full">
+                      <TableHeader className="bg-gray-800">
+                        <TableRow>
+                          <TableHead className="text-gray-300">Date</TableHead>
+                          <TableHead className="text-gray-300">
+                            Position
+                          </TableHead>
+                          <TableHead className="text-gray-300">
+                            Company
+                          </TableHead>
+                          <TableHead className="text-right text-gray-300">
+                            Status
+                          </TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {appliedJobs.map((app) => (
+                          <TableRow
+                            key={app._id}
+                            className="border-gray-700 hover:bg-gray-800/50 transition-colors"
+                          >
+                            <TableCell className="text-gray-300">
+                              {new Date(app.createdAt).toLocaleDateString()}
+                            </TableCell>
+                            <TableCell className="text-white font-medium">
+                              {app.job?.title}
+                            </TableCell>
+                            <TableCell className="text-gray-300">
+                              {app.job?.created_by?.companyname}
+                            </TableCell>
+                            <TableCell className="text-right">
+                              <Badge
+                                className={`
+                                  ${
+                                    app.status === "rejected"
+                                      ? "bg-red-500/20 text-red-400"
+                                      : app.status === "pending"
+                                      ? "bg-yellow-500/20 text-yellow-400"
+                                      : "bg-green-500/20 text-green-400"
+                                  } 
+                                  px-3 py-1
+                                `}
+                              >
+                                {app.status.charAt(0).toUpperCase() +
+                                  app.status.slice(1)}
+                              </Badge>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
                   </div>
                 ) : (
                   <div className="bg-gray-800/50 rounded-lg p-6 text-center">
@@ -808,13 +851,63 @@ const Profile = () => {
                     <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
                   </div>
                 ) : appliedInternships.length > 0 ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {appliedInternships.map((app) => (
-                      <LatestInternshipCards
-                        key={app._id}
-                        internship={app.internship}
-                      />
-                    ))}
+                  <div className="overflow-hidden rounded-lg border border-gray-700">
+                    <Table className="min-w-full">
+                      <TableHeader className="bg-gray-800">
+                        <TableRow>
+                          <TableHead className="text-gray-300">Date</TableHead>
+                          <TableHead className="text-gray-300">
+                            Position
+                          </TableHead>
+                          <TableHead className="text-gray-300">
+                            Company
+                          </TableHead>
+                          <TableHead className="text-right text-gray-300">
+                            Status
+                          </TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {appliedInternships.map((app) => (
+                          <TableRow
+                            key={app._id}
+                            className="border-gray-700 hover:bg-gray-800/50 transition-colors cursor-pointer"
+                            onClick={() =>
+                              navigate(
+                                `/internship/details/${app.internship?._id}`
+                              )
+                            }
+                          >
+                            <TableCell className="text-gray-300">
+                              {new Date(app.appliedAt).toLocaleDateString()}
+                            </TableCell>
+                            <TableCell className="text-white font-medium">
+                              {app.internship?.title}
+                            </TableCell>
+                            <TableCell className="text-gray-300">
+                              {app.internship?.recruiter?.companyname}
+                            </TableCell>
+                            <TableCell className="text-right">
+                              <Badge
+                                className={`
+                                  ${
+                                    app.status === "rejected"
+                                      ? "bg-red-500/20 text-red-400"
+                                      : app.status === "pending"
+                                      ? "bg-yellow-500/20 text-yellow-400"
+                                      : "bg-green-500/20 text-green-400"
+                                  } 
+                                  px-3 py-1
+                                `}
+                              >
+                                {app.status.charAt(0).toUpperCase() +
+                                  app.status.slice(1)}
+                              </Badge>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
                   </div>
                 ) : (
                   <div className="bg-gray-800/50 rounded-lg p-6 text-center">
