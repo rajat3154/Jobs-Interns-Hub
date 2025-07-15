@@ -19,11 +19,11 @@ const category = [
 
 const CategoryCarousel = ({ setQuery }) => {
   return (
-    <div className="bg-black text-white text-center ">
-      <div className="container mx-auto text-center px-2 sm:px-4">
+    <div className="bg-black text-white text-center overflow-x-hidden">
+      <div className="w-full max-w-full mx-auto text-center px-2 sm:px-4">
         <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Browse by Category</h2>
 
-        <div className="w-full">
+        <div className="w-full overflow-x-hidden">
           <Carousel className="w-full max-w-full sm:max-w-3xl mx-auto">
             <CarouselContent>
               {category.map((cat, index) => (
@@ -41,11 +41,10 @@ const CategoryCarousel = ({ setQuery }) => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="absolute top-2 sm:top-4 transform -translate-y-1/2 left-[-10px] sm:left-[-20px] px-1 sm:px-2 cursor-pointer">
+            <div className="absolute top-2 left-2 sm:top-4 sm:left-[-20px] z-10 cursor-pointer">
               <CarouselPrevious className="bg-blue-500 text-white p-2 sm:p-3 rounded-full cursor-pointer" />
             </div>
-
-            <div className="absolute top-2.5 sm:top-5 transform -translate-y-1/2 right-0 px-1 sm:px-2 cursor-pointer">
+            <div className="absolute top-2 right-2 sm:top-5 sm:right-0 z-10 cursor-pointer">
               <CarouselNext className="bg-blue-500 text-white p-2 sm:p-3 rounded-full cursor-pointer" />
             </div>
           </Carousel>
