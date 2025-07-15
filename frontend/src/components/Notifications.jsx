@@ -297,7 +297,7 @@ const Notifications = () => {
                           "User"}
                       </span>
                       <span className="text-xs text-gray-400 truncate">
-                        {notification.sender?.role.title() || ""}
+                        {notification.sender?.email || ""}
                       </span>
                     </div>
                   </div>
