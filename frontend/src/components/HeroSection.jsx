@@ -1,48 +1,117 @@
-import React, { useRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button } from "./ui/button";
-import { Search, Rocket, Sparkles } from "lucide-react";
+import { Search, Rocket, Sparkles, VideoOff } from "lucide-react";
 import { motion } from "framer-motion";
 import { useSearch } from "../context/SearchContext";
 
 const HeroSection = () => {
   const { searchQuery, setSearchQuery } = useSearch();
   const videoRef = useRef(null);
+  const [videoUrl, setVideoUrl] = useState("");
+  const [videoError, setVideoError] = useState(false);
+  const [loadingVideo, setLoadingVideo] = useState(true);
 
-  // Ensure video plays and loops properly
+  // Fetch a professional workplace video from Pexels API
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch((error) => {
-        console.log("Video autoplay prevented:", error);
-        // Fallback: mute the video and try to play again
-        videoRef.current.muted = true;
-        videoRef.current.play();
-      });
-    }
+    const fetchVideo = async () => {
+      try {
+        // Note: In production, you should use your own Pexels API key
+        // and make this request from your backend to keep the key secure
+        const response = await fetch(
+          "https://api.pexels.com/videos/search?query=office+work&per_page=1",
+          {
+            headers: {
+              Authorization:
+                "563492ad6f91700001000001a5e3b8f3b0a14c7b8b5f3b3c3e3b3f3b",
+            },
+          }
+        );
+
+        if (!response.ok) throw new Error("Failed to fetch video");
+
+        const data = await response.json();
+        if (data.videos && data.videos.length > 0) {
+          // Get the HD quality video file
+          const videoFile = data.videos[0].video_files.find(
+            (file) => file.quality === "hd" || file.quality === "sd"
+          );
+          setVideoUrl(videoFile.link);
+        } else {
+          throw new Error("No videos found");
+        }
+      } catch (error) {
+        console.error("Error fetching video:", error);
+        setVideoError(true);
+        // Fallback to a default video
+        setVideoUrl(
+          "https://assets.mixkit.co/videos/preview/mixkit-people-working-in-an-office-2382-large.mp4"
+        );
+      } finally {
+        setLoadingVideo(false);
+      }
+    };
+
+    fetchVideo();
   }, []);
+
+  // Handle video playback
+  useEffect(() => {
+    if (!videoRef.current || !videoUrl) return;
+
+    const playVideo = async () => {
+      try {
+        videoRef.current.muted = true; // Required for autoplay in most browsers
+        await videoRef.current.play();
+      } catch (err) {
+        console.log("Video play error:", err);
+        setVideoError(true);
+      }
+    };
+
+    if (videoRef.current.readyState >= 3) {
+      // HAVE_FUTURE_DATA
+      playVideo();
+    } else {
+      videoRef.current.addEventListener("loadeddata", playVideo);
+      return () => {
+        videoRef.current?.removeEventListener("loadeddata", playVideo);
+      };
+    }
+  }, [videoUrl]);
 
   return (
     <div className="relative bg-black text-white py-20 sm:py-28 overflow-hidden h-[90vh] min-h-[700px] flex items-center">
-      {/* Video Background */}
+      {/* Video Background with fallbacks */}
       <div className="absolute inset-0 z-0">
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover opacity-40"
-        >
-          <source
-            src="https://assets.mixkit.co/videos/preview/mixkit-people-working-in-an-office-2382-large.mp4"
-            type="video/mp4"
-          />
-          Your browser does not support the video tag.
-        </video>
+        {!videoError && videoUrl ? (
+          <video
+            ref={videoRef}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover opacity-40"
+            onError={() => setVideoError(true)}
+          >
+            <source src={videoUrl} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-gray-900 to-blue-900 opacity-70 flex items-center justify-center">
+            <VideoOff className="h-20 w-20 text-gray-500" />
+          </div>
+        )}
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30"></div>
       </div>
 
       <div className="container mx-auto text-center px-2 sm:px-4 relative z-10">
+        {loadingVideo && (
+          <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-20">
+            <div className="animate-pulse text-gray-300">Loading...</div>
+          </div>
+        )}
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
