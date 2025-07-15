@@ -12,12 +12,12 @@ const ChatHome = () => {
   const dispatch = useDispatch();
   const [unreadCounts, setUnreadCounts] = useState({});
   const socket = useRef(null);
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   useEffect(() => {
     if (!authUser?._id) return;
 
     // Initialize socket connection
-    socket.current = io("http://localhost:8000", {
+    socket.current = io(`${apiUrl}`, {
       withCredentials: true,
     });
 
@@ -53,7 +53,7 @@ const ChatHome = () => {
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="flex bg-black mx-auto h-screen">
         <div className="flex justify-center w-7xl h-150 bg-black mx-auto">
           <Sidebar

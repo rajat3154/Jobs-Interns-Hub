@@ -13,7 +13,7 @@ const Internships = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((store) => store.auth);
   const { allInternships } = useSelector((store) => store.internship);
-
+ const apiUrl = import.meta.env.VITE_API_URL;
   const [recruiterInternships, setRecruiterInternships] = useState([]);
   const [filteredInternships, setFilteredInternships] = useState([]);
   const [filteredRecruiterInternships, setFilteredRecruiterInternships] =
@@ -24,7 +24,7 @@ const Internships = () => {
   const fetchInternships = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8000/api/v1/internship/get",
+        `${apiUrl}/api/v1/internship/get`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -45,7 +45,7 @@ const Internships = () => {
   const fetchRecruiterInternships = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8000/api/v1/internship/recruiter",
+        `${apiUrl}/api/v1/internship/recruiter`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },

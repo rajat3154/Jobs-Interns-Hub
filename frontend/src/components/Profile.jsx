@@ -69,6 +69,7 @@ const Profile = () => {
   const [pdfLoading, setPdfLoading] = useState(false);
   const [pdfError, setPdfError] = useState(null);
   const { user: currentUser } = useSelector((store) => store.auth);
+   const apiUrl = import.meta.env.VITE_API_URL;
   const { userId, userType } = useParams();
   const navigate = useNavigate();
 
@@ -79,9 +80,9 @@ const Profile = () => {
         let endpoint;
 
         if (userId && userType) {
-          endpoint = `http://localhost:8000/api/v1/${userType.toLowerCase()}/${userId}`;
+          endpoint = `${apiUrl}/api/v1/${userType.toLowerCase()}/${userId}`;
         } else if (currentUser?._id) {
-          endpoint = `http://localhost:8000/api/v1/${currentUser.role.toLowerCase()}/${
+          endpoint = `${apiUrl}/api/v1/${currentUser.role.toLowerCase()}/${
             currentUser._id
           }`;
         } else {
@@ -120,14 +121,14 @@ const Profile = () => {
 
         const [followersRes, followingRes] = await Promise.all([
           axios.get(
-            `http://localhost:8000/api/v1/follow/followers/${profileUser._id}/${profileUser.role}`,
+            `${apiUrl}/api/v1/follow/followers/${profileUser._id}/${profileUser.role}`,
             {
               headers: { "Content-Type": "application/json" },
               withCredentials: true,
             }
           ),
           axios.get(
-            `http://localhost:8000/api/v1/follow/following/${profileUser._id}/${profileUser.role}`,
+            `${apiUrl}/api/v1/follow/following/${profileUser._id}/${profileUser.role}`,
             {
               headers: { "Content-Type": "application/json" },
               withCredentials: true,
@@ -153,7 +154,7 @@ const Profile = () => {
     try {
       setJobsLoading(true);
       const response = await axios.get(
-        "http://localhost:8000/api/v1/application/get",
+        `${apiUrl}/api/v1/application/get`,
         {
           withCredentials: true,
         }
@@ -174,7 +175,7 @@ const Profile = () => {
     try {
       setInternshipsLoading(true);
       const response = await axios.get(
-        "http://localhost:8000/api/v1/application/internships/get",
+        `${apiUrl}/api/v1/application/internships/get`,
         { withCredentials: true }
       );
       
@@ -194,7 +195,7 @@ const Profile = () => {
     try {
       setSavedJobsLoading(true);
       const response = await axios.get(
-        "http://localhost:8000/api/v1/job/saved",
+        `${apiUrl}/api/v1/job/saved`,
         {
           withCredentials: true,
         }
@@ -215,7 +216,7 @@ const Profile = () => {
     try {
       setSavedInternshipsLoading(true);
       const response = await axios.get(
-        "http://localhost:8000/api/v1/internship/saved",
+        `${apiUrl}/api/v1/internship/saved`,
         {
           withCredentials: true,
         }
@@ -341,8 +342,8 @@ const Profile = () => {
 
     try {
       const endpoint = type === 'job' 
-        ? `http://localhost:8000/api/v1/job/save-job/${itemId}`
-        : `http://localhost:8000/api/v1/internship/save-internship/${itemId}`;
+        ? `${apiUrl}/api/v1/job/save-job/${itemId}`
+        : `${apiUrl}/api/v1/internship/save-internship/${itemId}`;
 
       const response = await axios.post(endpoint, {}, { withCredentials: true });
 

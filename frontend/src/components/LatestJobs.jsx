@@ -11,10 +11,10 @@ const LatestJobs = () => {
   const navigate = useNavigate();
   const { user } = useSelector((store) => store.auth);
   const { searchQuery } = useSearch();
-
+ const apiUrl = import.meta.env.VITE_API_URL;
   const fetchLatestJobs = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/v1/job/latest", {
+      const response = await fetch(`${apiUrl}/api/v1/job/latest`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
@@ -73,7 +73,7 @@ const LatestJobs = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/v1/job/save-job/${jobId}`,
+        `${apiUrl}/api/v1/job/save-job/${jobId}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
