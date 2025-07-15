@@ -281,7 +281,7 @@ const Notifications = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
-                  className="w-full max-w-full sm:max-w-2xl mx-auto bg-gray-950 rounded-lg shadow border border-gray-800 p-4 mb-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 text-left break-words"
+                  className="w-full max-w-full sm:max-w-2xl mx-auto border-blue-600 bg-gray-950 rounded-lg shadow border border-gray-800 p-4 mb-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 text-left break-words"
                 >
                   <div className="flex-shrink-0">
                     {getNotificationIcon(notification.type)}
