@@ -41,12 +41,13 @@ const CategoryCarousel = ({ setQuery }) => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="absolute top-2 sm:top-4 transform -translate-y-1/2 left-[-10px] sm:left-[-20px] px-1 sm:px-2 cursor-pointer">
-              <CarouselPrevious className="bg-blue-500 text-white p-2 sm:p-3 rounded-full cursor-pointer" />
+            {/* Show navigation buttons only on mobile (sm and below) */}
+            <div className="absolute top-2 left-[-10px] px-1 cursor-pointer sm:hidden">
+              <CarouselPrevious className="bg-blue-500 text-white p-2 rounded-full cursor-pointer" />
             </div>
 
-            <div className="absolute top-2.5 sm:top-5 transform -translate-y-1/2 right-0 px-1 sm:px-2 cursor-pointer">
-              <CarouselNext className="bg-blue-500 text-white p-2 sm:p-3 rounded-full cursor-pointer" />
+            <div className="absolute top-2.5 right-0 px-1 cursor-pointer sm:hidden">
+              <CarouselNext className="bg-blue-500 text-white p-2 rounded-full cursor-pointer" />
             </div>
           </Carousel>
         </div>
