@@ -269,7 +269,7 @@ const Admin = () => {
 
     try {
       const response = await fetch(
-        `${apiUrl}/api/v1/recruiter/${id}`,
+        `${api}/api/v1/recruiter/${id}`,
         {
           method: "DELETE",
           credentials: "include",
