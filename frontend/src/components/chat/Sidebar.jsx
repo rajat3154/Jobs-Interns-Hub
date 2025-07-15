@@ -197,6 +197,19 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
     return Array.isArray(onlineUsers) && onlineUsers.includes(userId);
   };
 
+  // Prevent background scroll when sidebar is open on mobile
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (sidebarOpen) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+    return () => {
+      document.body.classList.remove('overflow-hidden');
+    };
+  }, [sidebarOpen]);
+
   // Responsive sidebar classes
   const sidebarBase = "w-full sm:w-1/3 border-r border-gray-800 bg-black bg-opacity-90 overflow-hidden flex flex-col";
   const sidebarMobile = sidebarOpen
