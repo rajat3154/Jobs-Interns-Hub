@@ -29,7 +29,7 @@ const CategoryCarousel = ({ setQuery }) => {
               {category.map((cat, index) => (
                 <CarouselItem
                   key={index}
-                  className="box-border basis-2/3 xs:basis-1/2 sm:basis-1/3 px-2 py-2 sm:px-3 sm:py-4"
+                  className="box-border basis-full sm:basis-1/3 px-2 py-2 sm:px-3 sm:py-4"
                 >
                   <Button
                     variant="outline"
