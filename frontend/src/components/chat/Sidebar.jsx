@@ -218,10 +218,10 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
 
   return (
     <div className={`${sidebarBase} ${sidebarMobile}`}>
-      {/* Mobile close button */}
-      <div className="flex justify-end p-4 sm:hidden">
-        <button onClick={() => setSidebarOpen(false)} aria-label="Close chat list" className="sm:hidden">
-          <X className="h-7 w-7 text-gray-300" />
+      {/* Hamburger for mobile (inside sidebar) */}
+      <div className="flex justify-start p-4 sm:hidden">
+        <button onClick={() => setSidebarOpen(false)} aria-label="Close chat list" className="sm:hidden invisible">
+          {/* This is a placeholder to keep spacing consistent, but invisible on desktop */}
         </button>
       </div>
       {/* User Profile */}
