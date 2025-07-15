@@ -33,10 +33,11 @@ const Notifications = () => {
   const socket = useSocket();
 
   // Filter notifications based on active tab
+  // Only show 'follow' and 'application' notifications
   const filteredNotifications = notifications.filter((notification) => {
-    if (activeTab === "all") return true;
-    if (activeTab === "unread") return !notification.read;
-    return notification.type === activeTab;
+    if (activeTab === "all") return ["follow", "application"].includes(notification.type);
+    if (activeTab === "unread") return !notification.read && ["follow", "application"].includes(notification.type);
+    return notification.type === activeTab && ["follow", "application"].includes(notification.type);
   });
 
   // Helper function to get sender name
@@ -211,7 +212,7 @@ const Notifications = () => {
                 variant="ghost"
                 size="sm"
                 onClick={handleMarkAllAsRead}
-                className="text-blue-400 hover:bg-blue-900/30"
+                className="text-white hover:bg-blue-900/30"
                 disabled={notifications.every((n) => n.read)}
               >
                 Mark all as read
@@ -227,14 +228,19 @@ const Notifications = () => {
 
           {/* Notification tabs */}
           <div className="flex overflow-x-auto gap-2 mb-6 pb-2">
-            {["all", "unread", "job", "application", "message", "system"].map(
+            {[
+              "all",
+              "unread",
+              "follow",
+              "application"
+            ].map(
               (tab) => (
                 <Button
                   key={tab}
                   variant={activeTab === tab ? "default" : "ghost"}
                   size="sm"
                   onClick={() => setActiveTab(tab)}
-                  className={`rounded-full capitalize ${
+                  className={`rounded-full capitalize text-white ${
                     activeTab === tab ? "bg-blue-600" : "hover:bg-gray-800"
                   }`}
                 >
@@ -242,13 +248,11 @@ const Notifications = () => {
                     ? "All"
                     : tab === "unread"
                     ? "Unread"
-                    : tab === "job"
-                    ? "Jobs"
+                    : tab === "follow"
+                    ? "Follows"
                     : tab === "application"
                     ? "Applications"
-                    : tab === "message"
-                    ? "Messages"
-                    : "System"}
+                    : tab}
                 </Button>
               )
             )}
