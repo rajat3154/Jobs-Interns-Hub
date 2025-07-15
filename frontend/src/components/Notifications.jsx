@@ -283,6 +283,17 @@ const Notifications = () => {
                   exit={{ opacity: 0, y: -20 }}
                   className="w-full max-w-full sm:max-w-2xl mx-auto border-blue-600 bg-gray-950 rounded-lg shadow border border-gray-800 p-4 mb-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 text-left break-words"
                 >
+                  <div className="flex items-center gap-3 mb-2">
+                    <Avatar className="h-9 w-9">
+                      <AvatarImage src={notification.sender?.profile?.profilePhoto} />
+                      <AvatarFallback className="bg-gray-700 text-blue-400">
+                        {(notification.sender?.fullname || notification.sender?.companyname || 'U').charAt(0)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="font-semibold text-white text-base truncate">
+                      {notification.sender?.fullname || notification.sender?.companyname || 'User'}
+                    </span>
+                  </div>
                   <div className="flex-shrink-0">
                     {getNotificationIcon(notification.type)}
                   </div>
