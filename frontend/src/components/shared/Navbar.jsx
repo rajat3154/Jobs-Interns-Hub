@@ -50,7 +50,7 @@ const Navbar = () => {
         <div className="flex items-center sm:hidden">
           <button
             onClick={() => setMobileMenuOpen((prev) => !prev)}
-            className="text-gray-300 focus:outline-none"
+            className="text-gray-300 focus:outline-none sm:hidden"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
