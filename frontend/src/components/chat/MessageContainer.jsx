@@ -10,6 +10,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { ChevronLeft, Paperclip, Send, Smile, Video } from "lucide-react";
 import toast from "react-hot-toast";
+import Message from "./Message";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
@@ -253,42 +254,9 @@ const MessageContainer = ({ selectedUser, unreadCounts, setUnreadCounts, socket,
                                     <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
                               </div>
                         ) : (Array.isArray(messages) && messages.length > 0) ? (
-                              messages.map((message) => {
-                                    const isSender = message.senderId === authUser._id;
-                                    return (
-                                          <motion.div
-                                                key={message._id}
-                                                initial={{ opacity: 0, y: 10 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                className={`flex ${
-                                                      isSender ? "justify-end" : "justify-start"
-                                                }`}
-                                          >
-                                                <div
-                                                      className={`max-w-xs md:max-w-md rounded-lg px-4 py-2 relative ${
-                                                            isSender
-                                                                  ? "bg-blue-600 rounded-tr-none"
-                                                                  : "bg-gray-900 rounded-tl-none"
-                                                      }`}
-                                                >
-                                                      <p className="text-white">{message.message}</p>
-                                                      <div className="flex items-center justify-end mt-1 gap-1">
-                                                            <p className="text-xs text-gray-300 text-right">
-                                                                  {new Date(message.createdAt).toLocaleTimeString([], {
-                                                                        hour: "2-digit",
-                                                                        minute: "2-digit",
-                                                                  })}
-                                                            </p>
-                                                            {isSender && (
-                                                                  <span className={`ml-1 text-xs ${message.read ? 'text-black' : 'text-white'}`} title={message.read ? 'Read' : 'Delivered'}>
-                                                                        ✓✓
-                                                                  </span>
-                                                            )}
-                                                      </div>
-                                                </div>
-                                          </motion.div>
-                                    );
-                              })
+                              messages.map((message) => (
+                                    <Message key={message._id} message={message} />
+                              ))
                         ) : (
                               <div className="flex justify-center items-center h-full">
                                     <p className="text-gray-400">Say hello!</p>
