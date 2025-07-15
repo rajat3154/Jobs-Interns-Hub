@@ -19,6 +19,8 @@ const Login = () => {
     password: "",
     role: "",
   });
+  const apiUrl = import.meta.env.VITE_API_URL;
+  console.log(apiUrl); // http://localhost:3000/api
 
   const { loading } = useSelector((store) => store.auth);
   useEffect(() => {
@@ -42,7 +44,7 @@ const Login = () => {
     try {
       dispatch(setLoading(true));
 
-      const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
+      const res = await axios.post(`${apiUrl}/api/v1/login`, input, {
         headers: {
           "Content-Type": "application/json",
         },
