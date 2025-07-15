@@ -232,7 +232,7 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
             placeholder="Search users..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-gray-900 border-gray-700 text-white"
+            className="pl-10 bg-gray-950 border-gray-700 text-white"
           />
         </div>
       </div>
@@ -388,7 +388,7 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
       </div>
 
       {/* Current User Profile & Logout */}
-      <div className="p-4 border-t border-gray-800 bg-gray-900">
+      <div className="p-4 border-t border-gray-800 bg-gray-950">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Avatar className="h-10 w-10">

@@ -182,7 +182,7 @@ const MessageContainer = ({ selectedUser, unreadCounts, setUnreadCounts, socket,
       return (
             <div className={`flex-1 flex flex-col bg-black ${sidebarOpen ? 'hidden sm:flex' : ''}`}>
                   {/* Chat header */}
-                  <div className="p-4 border-b border-gray-800 flex items-center bg-gray-900">
+                  <div className="p-4 border-b border-gray-800 flex items-center bg-gray-950">
                         {/* Hamburger for mobile if sidebar is closed */}
                         {!sidebarOpen && (
                           <button
@@ -300,7 +300,7 @@ const MessageContainer = ({ selectedUser, unreadCounts, setUnreadCounts, socket,
                   </div>
 
                   {/* Message input */}
-                  <div className="p-4 border-t border-gray-800">
+                  <div className="p-4 border-t border-gray-950">
                         <form onSubmit={handleSendMessage} className="flex items-center gap-2">
                               <Input
                                     type="text"
