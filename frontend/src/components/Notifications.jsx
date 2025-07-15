@@ -9,6 +9,11 @@ import {
   UserPlus,
   UserCheck,
   Loader2,
+  X,
+  Mail,
+  MessageSquare,
+  ThumbsUp,
+  Bookmark,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
@@ -24,7 +29,15 @@ const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [activeTab, setActiveTab] = useState("all");
   const socket = useSocket();
+
+  // Filter notifications based on active tab
+  const filteredNotifications = notifications.filter((notification) => {
+    if (activeTab === "all") return true;
+    if (activeTab === "unread") return !notification.read;
+    return notification.type === activeTab;
+  });
 
   // Helper function to get sender name
   const getSenderName = (notification) => {
@@ -38,7 +51,6 @@ const Notifications = () => {
 
   // Handler for new notifications received via socket
   const handleNewNotification = useCallback((notification) => {
-    console.log("Received new notification:", notification);
     setNotifications((prev) => {
       if (prev.some((n) => n._id === notification._id)) {
         return prev; // Avoid duplicates
@@ -68,15 +80,12 @@ const Notifications = () => {
     const fetchNotifications = async () => {
       try {
         setLoading(true);
-        console.log("Fetching notifications...");
         const response = await axios.get(`${API_BASE_URL}/api/notifications`, {
           withCredentials: true,
         });
-        console.log("Received notifications:", response.data);
         setNotifications(response.data.data);
         setError(null);
       } catch (err) {
-        console.error("Error fetching notifications:", err);
         setError(err.message);
         toast.error("Failed to fetch notifications");
       } finally {
@@ -103,6 +112,36 @@ const Notifications = () => {
     }
   };
 
+  // Mark all notifications as read
+  const handleMarkAllAsRead = async () => {
+    try {
+      await axios.post(
+        `${API_BASE_URL}/api/notifications/read-all`,
+        {},
+        { withCredentials: true }
+      );
+      setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+      toast.success("All notifications marked as read");
+    } catch (err) {
+      toast.error("Failed to mark all notifications as read");
+    }
+  };
+
+  // Delete a notification
+  const handleDeleteNotification = async (notificationId) => {
+    try {
+      await axios.delete(
+        `${API_BASE_URL}/api/notifications/${notificationId}`,
+        { withCredentials: true }
+      );
+      setNotifications((prev) => prev.filter((n) => n._id !== notificationId));
+      toast.success("Notification deleted");
+    } catch (err) {
+      toast.error("Failed to delete notification");
+    }
+  };
+
+  // Get appropriate icon for notification type
   const getNotificationIcon = (type) => {
     switch (type) {
       case "follow":
@@ -113,11 +152,18 @@ const Notifications = () => {
         return <CheckCircle className="w-5 h-5 text-yellow-400" />;
       case "system":
         return <Zap className="w-5 h-5 text-purple-400" />;
+      case "message":
+        return <MessageSquare className="w-5 h-5 text-cyan-400" />;
+      case "like":
+        return <ThumbsUp className="w-5 h-5 text-pink-400" />;
+      case "save":
+        return <Bookmark className="w-5 h-5 text-orange-400" />;
       default:
         return <Bell className="w-5 h-5 text-gray-400" />;
     }
   };
 
+  // Loading state
   if (loading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center p-4">
@@ -129,6 +175,7 @@ const Notifications = () => {
     );
   }
 
+  // Error state
   if (error) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center p-4">
@@ -159,29 +206,72 @@ const Notifications = () => {
             <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
               Notifications
             </h2>
-            <div className="flex items-center gap-2">
-              <Bell className="w-6 h-6 text-blue-400" />
-              <span className="bg-black text-white text-xs font-bold px-2 py-1 rounded-full">
-                {notifications.filter((n) => !n.read).length}
-              </span>
+            <div className="flex items-center gap-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleMarkAllAsRead}
+                className="text-blue-400 hover:bg-blue-900/30"
+                disabled={notifications.every((n) => n.read)}
+              >
+                Mark all as read
+              </Button>
+              <div className="flex items-center gap-2">
+                <Bell className="w-6 h-6 text-blue-400" />
+                <span className="bg-black text-white text-xs font-bold px-2 py-1 rounded-full">
+                  {notifications.filter((n) => !n.read).length}
+                </span>
+              </div>
             </div>
           </div>
 
+          {/* Notification tabs */}
+          <div className="flex overflow-x-auto gap-2 mb-6 pb-2">
+            {["all", "unread", "job", "application", "message", "system"].map(
+              (tab) => (
+                <Button
+                  key={tab}
+                  variant={activeTab === tab ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setActiveTab(tab)}
+                  className={`rounded-full capitalize ${
+                    activeTab === tab ? "bg-blue-600" : "hover:bg-gray-800"
+                  }`}
+                >
+                  {tab === "all"
+                    ? "All"
+                    : tab === "unread"
+                    ? "Unread"
+                    : tab === "job"
+                    ? "Jobs"
+                    : tab === "application"
+                    ? "Applications"
+                    : tab === "message"
+                    ? "Messages"
+                    : "System"}
+                </Button>
+              )
+            )}
+          </div>
+
           <AnimatePresence>
-            {notifications.length === 0 ? (
+            {filteredNotifications.length === 0 ? (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className="text-center text-gray-400 py-8"
               >
                 <Bell className="w-12 h-12 mx-auto text-gray-600 mb-4" />
-                <p>No notifications yet</p>
+                <p>
+                  No {activeTab === "all" ? "" : activeTab} notifications yet
+                </p>
                 <p className="text-sm text-gray-500 mt-2">
-                  Your notifications will appear here
+                  Your {activeTab === "all" ? "" : activeTab} notifications will
+                  appear here
                 </p>
               </motion.div>
             ) : (
-              notifications.map((notification) => (
+              filteredNotifications.map((notification) => (
                 <motion.div
                   key={notification._id}
                   initial={{ opacity: 0, y: 20 }}
@@ -195,24 +285,25 @@ const Notifications = () => {
                 >
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0">
-                      <Avatar className="w-10 h-10 border border-gray-800">
-                        <AvatarImage
-                          src={notification.sender?.profile?.profilePhoto}
-                          alt={getSenderName(notification)}
-                        />
-                        <AvatarFallback className="bg-gray-900 text-gray-400">
-                          {getSenderName(notification)
-                            .split(" ")
-                            .map((n) => n[0])
-                            .join("")
-                            .toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
+                      {getNotificationIcon(notification.type)}
                     </div>
                     <div className="flex-grow">
-                      <h3 className="font-semibold text-gray-100">
-                        {notification.title}
-                      </h3>
+                      <div className="flex justify-between items-start">
+                        <h3 className="font-semibold text-gray-100">
+                          {notification.title}
+                        </h3>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteNotification(notification._id);
+                          }}
+                          className="text-gray-500 hover:text-red-400"
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
                       <p className="text-gray-400 mt-1">
                         {notification.message}
                       </p>
@@ -227,12 +318,24 @@ const Notifications = () => {
                           }
                         )}
                       </div>
+                      {notification.link && (
+                        <Link
+                          to={notification.link}
+                          className="mt-3 inline-block text-blue-400 text-sm hover:underline"
+                          onClick={() => handleMarkAsRead(notification._id)}
+                        >
+                          View details
+                        </Link>
+                      )}
                     </div>
                     {!notification.read && (
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => handleMarkAsRead(notification._id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleMarkAsRead(notification._id);
+                        }}
                         className="flex-shrink-0 text-blue-400 hover:bg-blue-900/30"
                       >
                         Mark as read
