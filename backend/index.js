@@ -23,9 +23,20 @@ const server = createServer(app);
 // Initialize Socket.IO immediately after creating the server
 const io = initSocket(server);
 
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://jobinternhub.vercel.app'
+];
+
 const corsOptions = {
     origin: (origin, callback) => {
-        callback(null, true);
+        // allow requests with no origin (like mobile apps, curl, etc.)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            var msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
