@@ -31,7 +31,7 @@ const LatestJobCards = ({ job, onDetails, onSave, isSaved }) => {
       onKeyDown={(e) => e.key === "Enter" && handleViewDetailsClick(e)}
     >
       {/* Action Buttons */}
-      <div className="absolute top-2 sm:top-3 right-2 sm:right-3 flex flex-col sm:flex-row gap-2 z-10">
+      <div className="absolute top-2 sm:top-3 right-2 sm:right-3 flex gap-1 sm:gap-2 z-10">
         <Button
           onClick={handleViewDetailsClick}
           className="px-2 sm:px-3 py-1 bg-purple-800 border-purple-500 text-white text-xs sm:text-sm font-bold rounded-md hover:bg-purple-600 cursor-pointer"
@@ -42,20 +42,20 @@ const LatestJobCards = ({ job, onDetails, onSave, isSaved }) => {
           <Button
             onClick={handleSaveClick}
             variant="outline"
-            className={`px-2 sm:px-3 py-1 text-xs sm:text-sm font-bold rounded-md flex items-center gap-2 cursor-pointer mt-1 sm:mt-0 ${
+            className={`px-2 sm:px-3 py-1 text-xs sm:text-sm font-bold rounded-md flex items-center gap-1 sm:gap-2 cursor-pointer ${
               isSaved
                 ? "bg-blue-500 hover:bg-blue-600 text-black"
                 : "bg-black hover:bg-gray-700"
             }`}
           >
-            {isSaved ? <BookmarkCheck size={16} /> : <Bookmark size={16} />}
+            {isSaved ? <BookmarkCheck size={14} /> : <Bookmark size={14} />}
             {isSaved ? "Saved" : "Save Job"}
           </Button>
         )}
       </div>
 
       {/* Card Content */}
-      <div className="mt-10 flex flex-col h-full">
+      <div className="mt-8 sm:mt-10 flex flex-col h-full">
         {/* Date - Left aligned */}
         <p className="text-xs text-gray-400 mb-2 sm:mb-3 text-left">
           {job.createdAt ? new Date(job.createdAt).toLocaleDateString() : "N/A"}
@@ -92,14 +92,14 @@ const LatestJobCards = ({ job, onDetails, onSave, isSaved }) => {
         </div>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-2 mb-3 sm:mb-4">
-          <span className="px-2 py-1 bg-blue-400 text-black text-xs font-medium rounded-md">
+        <div className="flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-4">
+          <span className="px-2 py-1 sm:px-2.5 sm:py-1 bg-blue-400 text-black text-xs font-medium rounded-md">
             {job.position || 1} Position{job.position > 1 ? "s" : ""}
           </span>
-          <span className="px-2 py-1 bg-yellow-400 text-black text-xs font-medium rounded-md">
+          <span className="px-2 py-1 sm:px-2.5 sm:py-1 bg-yellow-400 text-black text-xs font-medium rounded-md">
             {job.salary ? `${job.salary} LPA` : "Salary N/A"}
           </span>
-          <span className="px-2 py-1 bg-red-600 text-white text-xs font-medium rounded-md">
+          <span className="px-2 py-1 sm:px-2.5 sm:py-1 bg-red-600 text-white text-xs font-medium rounded-md">
             {job.jobType || "Type N/A"}
           </span>
         </div>
@@ -110,7 +110,7 @@ const LatestJobCards = ({ job, onDetails, onSave, isSaved }) => {
             <p className="text-xs font-medium text-gray-400 mb-1 sm:mb-2">
               Required Skills:
             </p>
-            <div className="flex flex-wrap gap-2 mt-1 sm:mt-2">
+            <div className="flex flex-wrap gap-1 sm:gap-2 mt-1 sm:mt-2">
               {job.requirements?.map((skill, index) => (
                 <span
                   key={index}

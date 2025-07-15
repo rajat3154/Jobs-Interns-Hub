@@ -28,7 +28,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent leading-tight"
+          className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
         >
           <span className="block">Search, Apply &</span>
           <span className="block mt-2 sm:mt-3">
@@ -43,7 +43,7 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-base xs:text-lg sm:text-xl mb-8 sm:mb-12 max-w-[95vw] sm:max-w-[700px] mx-auto text-gray-300"
+          className="text-base sm:text-xl mb-8 sm:mb-12 max-w-[95vw] sm:max-w-[700px] mx-auto text-gray-300"
         >
           Discover your perfect career opportunity from thousands of jobs and
           internships at top companies worldwide.
@@ -53,22 +53,22 @@ const HeroSection = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.6 }}
-          className="flex flex-col xs:flex-row w-full max-w-full sm:max-w-2xl mx-auto bg-gradient-to-r from-gray-900/50 to-gray-800/20 backdrop-blur-lg border border-gray-700 rounded-2xl sm:rounded-full items-stretch xs:items-center gap-2 p-1 shadow-xl hover:shadow-blue-500/20 transition-shadow"
+          className="flex flex-col sm:flex-row w-full max-w-full sm:max-w-2xl mx-auto bg-gradient-to-r from-gray-900/50 to-gray-800/20 backdrop-blur-lg border border-gray-700 rounded-2xl sm:rounded-full items-center gap-2 p-1 shadow-xl hover:shadow-blue-500/20 transition-shadow"
         >
           <input
             type="text"
             placeholder="Job title, keywords, or company..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full py-3 xs:py-4 pl-4 xs:pl-6 pr-2 bg-transparent text-white placeholder-gray-400 border-none focus:ring-0 outline-none text-sm xs:text-base"
+            className="w-full py-3 sm:py-4 pl-4 sm:pl-6 pr-2 bg-transparent text-white placeholder-gray-400 border-none focus:ring-0 outline-none text-sm sm:text-base"
           />
 
           <Button
             size="lg"
-            className="rounded-xl sm:rounded-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-6 xs:px-8 py-4 xs:py-6 gap-2 transition-transform hover:scale-105 cursor-pointer text-base xs:text-lg"
+            className="rounded-xl sm:rounded-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-6 sm:px-8 py-4 sm:py-6 gap-2 transition-transform hover:scale-105 cursor-pointer w-full sm:w-auto text-base sm:text-lg"
           >
             <Search className="h-5 w-5" />
-            Search
+            <span className="hidden xs:inline">Search</span>
           </Button>
         </motion.div>
 
@@ -76,14 +76,14 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-8 sm:mt-12 flex flex-col xs:flex-row flex-wrap justify-center gap-4 sm:gap-8 text-gray-300 text-xs xs:text-sm"
+          className="mt-8 sm:mt-12 flex flex-col xs:flex-row justify-center gap-4 xs:gap-8 text-gray-300 text-xs sm:text-sm"
         >
           <div className="flex items-center gap-2 justify-center">
             <Rocket className="h-5 w-5 text-green-400" />
             <span>10,000+ Success Stories</span>
           </div>
           <div className="flex items-center gap-2 justify-center">
-            <span className="text-xl xs:text-2xl">🚀</span>
+            <span className="text-xl sm:text-2xl">🚀</span>
             <span>50,000+ Opportunities</span>
           </div>
         </motion.div>

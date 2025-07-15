@@ -100,8 +100,8 @@ const LatestJobs = () => {
   return (
     <div className="bg-black text-white py-10 sm:py-16">
       <div className="container mx-auto text-center px-2 sm:px-4">
-        <h1 className="text-2xl xs:text-3xl sm:text-5xl font-bold mb-6 sm:mb-10">
-          <span className="text-blue-500 text-xl xs:text-2xl sm:text-3xl">Latest and Top </span>Job
+        <h1 className="text-2xl sm:text-5xl font-bold mb-6 sm:mb-10">
+          <span className="text-blue-500 text-xl sm:text-3xl">Latest and Top </span>Job
           Openings
         </h1>
 
