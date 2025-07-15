@@ -54,16 +54,16 @@ const LatestInternships = () => {
   });
 
   return (
-    <div className="bg-black text-white py-16">
-      <div className="container mx-auto text-center px-4">
-        <h1 className="text-5xl font-bold mb-10">
-          <span className="text-blue-500 text-3xl">Latest and Top </span>
+    <div className="bg-black text-white py-10 sm:py-16">
+      <div className="container mx-auto text-center px-2 sm:px-4">
+        <h1 className="text-2xl xs:text-3xl sm:text-5xl font-bold mb-6 sm:mb-10">
+          <span className="text-blue-500 text-xl xs:text-2xl sm:text-3xl">Latest and Top </span>
           Internships
         </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mx-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 mx-0 sm:mx-4">
           {filteredInternships.length <= 0 ? (
-            <span className="col-span-full text-gray-400 text-lg">
+            <span className="col-span-full text-gray-400 text-base sm:text-lg">
               {searchQuery
                 ? "No internships match your search"
                 : "No internships available"}
@@ -79,16 +79,16 @@ const LatestInternships = () => {
 
           <Link
             to="/internships"
-            className="w-full p-6 rounded-lg shadow-lg bg-black text-white border border-blue-500 hover:bg-gray-800 cursor-pointer transition duration-300 flex flex-col items-center justify-center"
+            className="w-full p-4 sm:p-6 rounded-lg shadow-lg bg-black text-white border border-blue-500 hover:bg-gray-800 cursor-pointer transition duration-300 flex flex-col items-center justify-center"
           >
-            <h2 className="text-2xl font-bold text-blue-400">
+            <h2 className="text-lg sm:text-2xl font-bold text-blue-400">
               View More Internships
             </h2>
-            <p className="mt-2 text-gray-300 text-lg">
+            <p className="mt-2 text-gray-300 text-base sm:text-lg">
               Explore all internship opportunities
             </p>
-            <div className="mt-6 flex justify-center">
-              <button className="w-12 h-12 flex items-center justify-center rounded-full border border-blue-500 text-blue-400 text-2xl cursor-pointer hover:text-white transition duration-300">
+            <div className="mt-4 sm:mt-6 flex justify-center">
+              <button className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full border border-blue-500 text-blue-400 text-xl sm:text-2xl cursor-pointer hover:text-white transition duration-300">
                 ➡️
               </button>
             </div>

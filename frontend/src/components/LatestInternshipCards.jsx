@@ -80,17 +80,17 @@ const LatestInternshipCards = ({ internship }) => {
 
   return (
     <div
-      className="w-full p-5 rounded-xl shadow-md bg-black text-white border border-blue-500 hover:bg-gray-900 transition duration-300 flex flex-col h-full relative group cursor-pointer"
+      className="w-full p-3 sm:p-5 rounded-xl shadow-md bg-black text-white border border-blue-500 hover:bg-gray-900 transition duration-300 flex flex-col h-full relative group cursor-pointer"
       onClick={handleViewDetails}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === "Enter" && handleViewDetails(e)}
     >
       {/* Action Buttons */}
-      <div className="absolute top-3 right-3 flex gap-2 z-10">
+      <div className="absolute top-2 sm:top-3 right-2 sm:right-3 flex flex-col sm:flex-row gap-2 z-10">
         <Button
           onClick={handleViewDetails}
-          className="px-3 py-1 bg-purple-800 border-purple-500 text-white text-sm font-bold rounded-md hover:bg-purple-600 cursor-pointer"
+          className="px-2 sm:px-3 py-1 bg-purple-800 border-purple-500 text-white text-xs sm:text-sm font-bold rounded-md hover:bg-purple-600 cursor-pointer"
         >
           View Details
         </Button>
@@ -98,7 +98,7 @@ const LatestInternshipCards = ({ internship }) => {
           <Button
             onClick={handleSaveInternship}
             variant="outline"
-            className={`px-3 py-1 text-sm font-bold rounded-md flex items-center gap-2 cursor-pointer ${
+            className={`px-2 sm:px-3 py-1 text-xs sm:text-sm font-bold rounded-md flex items-center gap-2 cursor-pointer mt-1 sm:mt-0 ${
               isSaved
                 ? "bg-blue-500 hover:bg-blue-600 text-black"
                 : "bg-black hover:bg-gray-700"
@@ -113,20 +113,20 @@ const LatestInternshipCards = ({ internship }) => {
       {/* Card Content */}
       <div className="mt-10 flex flex-col h-full">
         {/* Date - Left aligned */}
-        <p className="text-xs text-gray-400 mb-3 text-left">
+        <p className="text-xs text-gray-400 mb-2 sm:mb-3 text-left">
           {new Date(internship.createdAt).toLocaleDateString()}
         </p>
 
         {/* Company Info */}
-        <div className="flex gap-3 mb-4">
-          <Avatar className="w-10 h-10 rounded-full object-cover border border-gray-600">
+        <div className="flex gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <Avatar className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border border-gray-600">
             <AvatarImage src={internship?.recruiter?.profile?.profilePhoto || internship?.created_by?.profile?.profilePhoto} />
             <AvatarFallback className="bg-gray-800 text-blue-400">
               {(internship?.recruiter?.companyname || internship?.created_by?.companyname || "C").charAt(0)}
             </AvatarFallback>
           </Avatar>
           <div className="text-left">
-            <h2 className="text-base font-semibold line-clamp-1">
+            <h2 className="text-sm sm:text-base font-semibold line-clamp-1">
               {internship?.recruiter?.companyname || internship?.created_by?.companyname || "Company Name"}
             </h2>
             <p className="text-xs text-gray-400">
@@ -136,27 +136,27 @@ const LatestInternshipCards = ({ internship }) => {
         </div>
 
         {/* Internship Title & Description */}
-        <div className="mb-4 text-left">
-          <h1 className="text-lg font-bold line-clamp-1 mb-2">
+        <div className="mb-3 sm:mb-4 text-left">
+          <h1 className="text-base sm:text-lg font-bold line-clamp-1 mb-1 sm:mb-2">
             {internship.title || "Internship Title"}
           </h1>
           {internship.description && (
-            <p className="text-sm text-gray-300 line-clamp-2">
+            <p className="text-xs sm:text-sm text-gray-300 line-clamp-2">
               {internship.description}
             </p>
           )}
         </div>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          <span className="px-2.5 py-1 bg-orange-400 text-black text-xs font-medium rounded-md">
+        <div className="flex flex-wrap gap-2 mb-3 sm:mb-4">
+          <span className="px-2 py-1 bg-orange-400 text-black text-xs font-medium rounded-md">
             {internship.duration || "Duration N/A"}
           </span>
-          <span className="px-2.5 py-1 bg-blue-500 text-black text-xs font-medium rounded-md">
+          <span className="px-2 py-1 bg-blue-500 text-black text-xs font-medium rounded-md">
             {internship.stipend || "Stipend N/A"}
           </span>
           <span
-            className={`px-2.5 py-1 text-xs font-medium rounded-md ${
+            className={`px-2 py-1 text-xs font-medium rounded-md ${
               internship.type === "Remote"
                 ? "bg-yellow-400 text-black"
                 : "bg-purple-600 text-white"
@@ -169,10 +169,10 @@ const LatestInternshipCards = ({ internship }) => {
         {/* Skills - Left aligned */}
         {internship.skills?.length > 0 && (
           <div className="mt-auto text-left">
-            <p className="text-xs font-medium text-gray-400 mb-2">
+            <p className="text-xs font-medium text-gray-400 mb-1 sm:mb-2">
               Required Skills:
             </p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mt-1 sm:mt-2">
               {internship.skills.slice(0, 4).map((skill, index) => (
                 <span
                   key={index}
