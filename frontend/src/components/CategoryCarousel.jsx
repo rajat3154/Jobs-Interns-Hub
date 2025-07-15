@@ -23,7 +23,7 @@ const CategoryCarousel = ({ setQuery }) => {
       <div className="container mx-auto text-center px-1 sm:px-4">
         <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Browse by Category</h2>
 
-        <div className="w-full overflow-x-auto">
+        <div className="w-full overflow-hidden">
           <Carousel className="w-full max-w-full sm:max-w-3xl mx-auto relative">
             <CarouselContent>
               {category.map((cat, index) => (
@@ -42,11 +42,11 @@ const CategoryCarousel = ({ setQuery }) => {
               ))}
             </CarouselContent>
             {/* Show navigation buttons only on mobile (sm and below) */}
-            <div className="absolute top-1/2 left-[-10px] -translate-y-1/2 px-1 cursor-pointer z-10 sm:hidden">
+            <div className="absolute top-1/2 left-2 -translate-y-1/2 z-10 sm:hidden">
               <CarouselPrevious className="bg-blue-500 text-white p-2 rounded-full cursor-pointer" />
             </div>
 
-            <div className="absolute top-1/2 right-0 -translate-y-1/2 px-1 cursor-pointer z-10 sm:hidden">
+            <div className="absolute top-1/2 right-2 -translate-y-1/2 z-10 sm:hidden">
               <CarouselNext className="bg-blue-500 text-white p-2 rounded-full cursor-pointer" />
             </div>
           </Carousel>
