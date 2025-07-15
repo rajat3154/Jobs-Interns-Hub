@@ -2,19 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "sonner";
-import { Check, X, Search, Users, Briefcase, GraduationCap, Trash2 } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-import { Skeleton } from "@/components/ui/skeleton";
 
 import Navbar from "./shared/Navbar";
+import {
+  ADMIN_API_END_POINT,
+  RECRUITER_API_END_POINT,
+  USER_API_END_POINT,
+  STUDENT_API_END_POINT,
+} from "@/utils/constant";
 
 const Admin = () => {
   const [students, setStudents] = useState([]);
@@ -27,8 +24,7 @@ const Admin = () => {
   });
   const navigate = useNavigate();
   const { user } = useSelector((store) => store.auth);
-  const apiUrl = import.meta.env.VITE_API_URL;
-
+ const apiUrl = import.meta.env.VITE_API_URL;
   // Pagination state
   const [currentStudentPage, setCurrentStudentPage] = useState(1);
   const [currentRecruiterPage, setCurrentRecruiterPage] = useState(1);
@@ -305,380 +301,389 @@ const Admin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="bg-black text-white min-h-screen">
       <Navbar />
-      
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-blue-500">Admin Dashboard</h1>
-          <div className="flex gap-2">
-            <Badge variant="outline" className="bg-blue-500/20 text-blue-400">
-              <Users className="h-4 w-4 mr-2" />
-              {students.length} Students
-            </Badge>
-            <Badge variant="outline" className="bg-purple-500/20 text-purple-400">
-              <Briefcase className="h-4 w-4 mr-2" />
-              {recruiters.length} Recruiters
-            </Badge>
-          </div>
         </div>
 
-        <Tabs defaultValue="students" className="w-full">
-          <TabsList className="inline-flex h-12 items-center justify-center rounded-lg bg-gray-950 p-1 mb-8 w-full">
-            <TabsTrigger
-              value="students"
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-6 py-2.5 text-lg font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-blue-500 data-[state=active]:text-white text-blue-400"
-            >
-              <GraduationCap className="w-5 h-5 mr-2" />
-              Students
-            </TabsTrigger>
-            <TabsTrigger
-              value="recruiters"
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-6 py-2.5 text-lg font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-blue-500 data-[state=active]:text-white text-blue-400"
-            >
-              <Briefcase className="w-5 h-5 mr-2" />
-              Recruiters
-            </TabsTrigger>
-            <TabsTrigger
-              value="requests"
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-6 py-2.5 text-lg font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-blue-500 data-[state=active]:text-white text-blue-400"
-            >
-              <Users className="w-5 h-5 mr-2" />
-              Pending Requests
-            </TabsTrigger>
-          </TabsList>
+        {/* Students Section */}
+        <div className="mb-12">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-semibold text-white">Students</h2>
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search students..."
+                className="bg-gray-800 text-white px-4 py-2 rounded-lg pl-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={studentSearchTerm}
+                onChange={(e) => {
+                  setStudentSearchTerm(e.target.value);
+                  setCurrentStudentPage(1);
+                }}
+              />
+              <svg
+                className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
+          </div>
 
-          <TabsContent value="students">
-            <Card className="bg-gray-950 border-gray-800">
-              <CardHeader>
-                <div className="flex justify-between items-center">
-                  <CardTitle className="text-xl text-white">Student Management</CardTitle>
-                  <div className="relative w-64">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    <Input
-                      placeholder="Search students..."
-                      className="pl-10 bg-gray-900 border-gray-700 text-white"
-                      value={studentSearchTerm}
-                      onChange={(e) => {
-                        setStudentSearchTerm(e.target.value);
-                        setCurrentStudentPage(1);
-                      }}
-                    />
+          {loading.students ? (
+            <div className="text-center py-8">
+              <p className="text-blue-300">Loading students...</p>
+            </div>
+          ) : (
+            <>
+              <div className="rounded-lg overflow-x-auto border border-gray-700 max-h-107 overflow-y-auto">
+                <table className="min-w-full divide-y divide-gray-700">
+                  <thead className="bg-gray-800 sticky top-0">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Profile
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Name
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Email
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Phone
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Skills
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Joined
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-black divide-y divide-gray-700">
+                    {currentStudents.length > 0 ? (
+                      currentStudents.map((student) => (
+                        <tr key={student._id}>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <Avatar className="w-10 h-10">
+                              <AvatarImage
+                                src={student.profile?.profilePhoto}
+                              />
+                              <AvatarFallback>
+                                {getInitials(student.fullname)}
+                              </AvatarFallback>
+                            </Avatar>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {student.fullname}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {student.email}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {student.phonenumber || "N/A"}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex flex-wrap gap-2">
+                              {(student.profile?.skills || []).map(
+                                (skill, index) => (
+                                  <span
+                                    key={index}
+                                    className="px-2 py-1 bg-gray-700 text-xs rounded-md"
+                                  >
+                                    {skill}
+                                  </span>
+                                )
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {new Date(student.createdAt).toLocaleDateString()}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <button
+                              onClick={() => handleDeleteStudent(student._id)}
+                              className="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="7" className="px-6 py-4 text-center">
+                          {students.length === 0
+                            ? "No students found"
+                            : "No matching students found"}
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              {totalStudentPages > 1 && (
+                <div className="flex justify-between items-center mt-4">
+                  <button
+                    onClick={() =>
+                      setCurrentStudentPage((prev) => Math.max(prev - 1, 1))
+                    }
+                    disabled={currentStudentPage === 1}
+                    className={`px-4 py-2 rounded ${
+                      currentStudentPage === 1
+                        ? "bg-gray-700 cursor-not-allowed"
+                        : "bg-blue-500 hover:bg-blue-600"
+                    }`}
+                  >
+                    Previous
+                  </button>
+                  <span>
+                    Page {currentStudentPage} of {totalStudentPages}
+                  </span>
+                  <button
+                    onClick={() =>
+                      setCurrentStudentPage((prev) =>
+                        Math.min(prev + 1, totalStudentPages)
+                      )
+                    }
+                    disabled={currentStudentPage === totalStudentPages}
+                    className={`px-4 py-2 rounded ${
+                      currentStudentPage === totalStudentPages
+                        ? "bg-gray-700 cursor-not-allowed"
+                        : "bg-blue-500 hover:bg-blue-600"
+                    }`}
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+
+        {/* Recruiters Section */}
+        <div className="mt-12">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-semibold text-white">Recruiters</h2>
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search recruiters..."
+                className="bg-gray-800 text-white px-4 py-2 rounded-lg pl-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={recruiterSearchTerm}
+                onChange={(e) => {
+                  setRecruiterSearchTerm(e.target.value);
+                  setCurrentRecruiterPage(1);
+                }}
+              />
+              <svg
+                className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
+          </div>
+
+          {loading.recruiters ? (
+            <div className="text-center py-8">
+              <p className="text-blue-300">Loading recruiters...</p>
+            </div>
+          ) : (
+            <>
+              <div className="rounded-lg overflow-x-auto border border-gray-700 max-h-105 overflow-y-auto">
+                <table className="min-w-full divide-y divide-gray-700">
+                  <thead className="bg-gray-800 sticky top-0">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Logo
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Company
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Email
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        CIN
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Address
+                      </th>
+
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-black divide-y divide-gray-700">
+                    {currentRecruiters.length > 0 ? (
+                      currentRecruiters.map((rec) => (
+                        <tr key={rec._id}>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <Avatar className="w-10 h-10">
+                              <AvatarImage src={rec.profile?.profilePhoto} />
+                              <AvatarFallback>
+                                {getInitials(rec.companyname)}
+                              </AvatarFallback>
+                            </Avatar>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {rec.companyname}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {rec.email}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {rec.cinnumber}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {rec.companyaddress}
+                          </td>
+
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <button
+                              onClick={() => handleDeleteRecruiter(rec._id)}
+                              className="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan="7" className="px-6 py-4 text-center">
+                          {recruiters.length === 0
+                            ? "No recruiters found"
+                            : "No matching recruiters found"}
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              {totalRecruiterPages > 1 && (
+                <div className="flex justify-between items-center mt-4">
+                  <button
+                    onClick={() =>
+                      setCurrentRecruiterPage((prev) => Math.max(prev - 1, 1))
+                    }
+                    disabled={currentRecruiterPage === 1}
+                    className={`px-4 py-2 rounded ${
+                      currentRecruiterPage === 1
+                        ? "bg-gray-700 cursor-not-allowed"
+                        : "bg-blue-500 hover:bg-blue-600"
+                    }`}
+                  >
+                    Previous
+                  </button>
+                  <span>
+                    Page {currentRecruiterPage} of {totalRecruiterPages}
+                  </span>
+                  <button
+                    onClick={() =>
+                      setCurrentRecruiterPage((prev) =>
+                        Math.min(prev + 1, totalRecruiterPages)
+                      )
+                    }
+                    disabled={currentRecruiterPage === totalRecruiterPages}
+                    className={`px-4 py-2 rounded ${
+                      currentRecruiterPage === totalRecruiterPages
+                        ? "bg-gray-700 cursor-not-allowed"
+                        : "bg-blue-500 hover:bg-blue-600"
+                    }`}
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+
+        {/* Recruiter Requests Section */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-semibold mb-4 text-white">
+            Pending Recruiter Requests
+          </h2>
+
+          {loading.requests ? (
+            <div className="text-center py-8">
+              <p className="text-blue-300">Loading recruiter requests...</p>
+            </div>
+          ) : recruiterRequests.length > 0 ? (
+            recruiterRequests.map((req) => (
+              <div
+                key={req._id}
+                className="bg-gray-950 p-4 rounded-lg mb-4 text-white flex items-start gap-4"
+              >
+                <Avatar className="w-16 h-16 border border-gray-600">
+                  <AvatarImage src={req.profile?.profilePhoto} />
+                  <AvatarFallback>
+                    {getInitials(req.companyname)}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex-1">
+                  <p>
+                    <strong>Company:</strong> {req.companyname}
+                  </p>
+                  <p>
+                    <strong>Email:</strong> {req.email}
+                  </p>
+                  <p>
+                    <strong>CIN:</strong> {req.cinnumber}
+                  </p>
+                  <p>
+                    <strong>Address:</strong> {req.companyaddress}
+                  </p>
+                  <div className="mt-2 flex gap-2">
+                    <button
+                      onClick={() => handleApprove(req._id)}
+                      className="flex items-center gap-1 bg-green-500 hover:bg-green-600 px-4 py-1 rounded transition-colors"
+                    >
+                      <Check size={16} /> Accept
+                    </button>
+                    <button
+                      onClick={() => handleReject(req._id)}
+                      className="flex items-center gap-1 bg-red-500 hover:bg-red-600 px-4 py-1 rounded transition-colors"
+                    >
+                      <X size={16} /> Reject
+                    </button>
                   </div>
                 </div>
-              </CardHeader>
-              <CardContent>
-                {loading.students ? (
-                  <div className="space-y-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Skeleton key={i} className="h-16 w-full bg-gray-800 rounded-lg" />
-                    ))}
-                  </div>
-                ) : (
-                  <>
-                    <ScrollArea className="h-[500px] rounded-md border border-gray-800">
-                      <Table>
-                        <TableHeader className="bg-gray-900 sticky top-0">
-                          <TableRow>
-                            <TableHead className="text-gray-300">Profile</TableHead>
-                            <TableHead className="text-gray-300">Name</TableHead>
-                            <TableHead className="text-gray-300">Email</TableHead>
-                            <TableHead className="text-gray-300">Phone</TableHead>
-                            <TableHead className="text-gray-300">Skills</TableHead>
-                            <TableHead className="text-gray-300">Joined</TableHead>
-                            <TableHead className="text-right text-gray-300">Actions</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {currentStudents.length > 0 ? (
-                            currentStudents.map((student) => (
-                              <TableRow key={student._id} className="border-gray-800 hover:bg-gray-900/50">
-                                <TableCell>
-                                  <Avatar className="h-10 w-10">
-                                    <AvatarImage src={student.profile?.profilePhoto} />
-                                    <AvatarFallback>
-                                      {getInitials(student.fullname)}
-                                    </AvatarFallback>
-                                  </Avatar>
-                                </TableCell>
-                                <TableCell className="font-medium text-white">
-                                  {student.fullname}
-                                </TableCell>
-                                <TableCell className="text-gray-300">
-                                  {student.email}
-                                </TableCell>
-                                <TableCell className="text-gray-300">
-                                  {student.phonenumber || "N/A"}
-                                </TableCell>
-                                <TableCell>
-                                  <div className="flex flex-wrap gap-1">
-                                    {(student.profile?.skills || []).slice(0, 3).map((skill, index) => (
-                                      <Badge 
-                                        key={index} 
-                                        variant="outline" 
-                                        className="text-xs bg-blue-500/20 text-blue-400 border-blue-500/30"
-                                      >
-                                        {skill}
-                                      </Badge>
-                                    ))}
-                                    {(student.profile?.skills || []).length > 3 && (
-                                      <Badge variant="outline" className="text-xs bg-gray-700 text-gray-400">
-                                        +{(student.profile?.skills || []).length - 3}
-                                      </Badge>
-                                    )}
-                                  </div>
-                                </TableCell>
-                                <TableCell className="text-gray-300">
-                                  {new Date(student.createdAt).toLocaleDateString()}
-                                </TableCell>
-                                <TableCell className="text-right">
-                                  <Button
-                                    variant="destructive"
-                                    size="sm"
-                                    onClick={() => handleDeleteStudent(student._id)}
-                                    className="h-8"
-                                  >
-                                    <Trash2 className="h-4 w-4 mr-1" />
-                                    Delete
-                                  </Button>
-                                </TableCell>
-                              </TableRow>
-                            ))
-                          ) : (
-                            <TableRow>
-                              <TableCell colSpan="7" className="h-24 text-center text-gray-400">
-                                {students.length === 0
-                                  ? "No students found"
-                                  : "No matching students found"}
-                              </TableCell>
-                            </TableRow>
-                          )}
-                        </TableBody>
-                      </Table>
-                    </ScrollArea>
-                    {totalStudentPages > 1 && (
-                      <div className="flex items-center justify-end space-x-2 py-4">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => setCurrentStudentPage((prev) => Math.max(prev - 1, 1))}
-                          disabled={currentStudentPage === 1}
-                        >
-                          Previous
-                        </Button>
-                        <span className="text-sm text-gray-400">
-                          Page {currentStudentPage} of {totalStudentPages}
-                        </span>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => setCurrentStudentPage((prev) => Math.min(prev + 1, totalStudentPages))}
-                          disabled={currentStudentPage === totalStudentPages}
-                        >
-                          Next
-                        </Button>
-                      </div>
-                    )}
-                  </>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="recruiters">
-            <Card className="bg-gray-950 border-gray-800">
-              <CardHeader>
-                <div className="flex justify-between items-center">
-                  <CardTitle className="text-xl text-white">Recruiter Management</CardTitle>
-                  <div className="relative w-64">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    <Input
-                      placeholder="Search recruiters..."
-                      className="pl-10 bg-gray-900 border-gray-700 text-white"
-                      value={recruiterSearchTerm}
-                      onChange={(e) => {
-                        setRecruiterSearchTerm(e.target.value);
-                        setCurrentRecruiterPage(1);
-                      }}
-                    />
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                {loading.recruiters ? (
-                  <div className="space-y-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Skeleton key={i} className="h-16 w-full bg-gray-800 rounded-lg" />
-                    ))}
-                  </div>
-                ) : (
-                  <>
-                    <ScrollArea className="h-[500px] rounded-md border border-gray-800">
-                      <Table>
-                        <TableHeader className="bg-gray-900 sticky top-0">
-                          <TableRow>
-                            <TableHead className="text-gray-300">Logo</TableHead>
-                            <TableHead className="text-gray-300">Company</TableHead>
-                            <TableHead className="text-gray-300">Email</TableHead>
-                            <TableHead className="text-gray-300">CIN</TableHead>
-                            <TableHead className="text-gray-300">Address</TableHead>
-                            <TableHead className="text-right text-gray-300">Actions</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                          {currentRecruiters.length > 0 ? (
-                            currentRecruiters.map((rec) => (
-                              <TableRow key={rec._id} className="border-gray-800 hover:bg-gray-900/50">
-                                <TableCell>
-                                  <Avatar className="h-10 w-10">
-                                    <AvatarImage src={rec.profile?.profilePhoto} />
-                                    <AvatarFallback>
-                                      {getInitials(rec.companyname)}
-                                    </AvatarFallback>
-                                  </Avatar>
-                                </TableCell>
-                                <TableCell className="font-medium text-white">
-                                  {rec.companyname}
-                                </TableCell>
-                                <TableCell className="text-gray-300">
-                                  {rec.email}
-                                </TableCell>
-                                <TableCell className="text-gray-300">
-                                  {rec.cinnumber}
-                                </TableCell>
-                                <TableCell className="text-gray-300">
-                                  {rec.companyaddress}
-                                </TableCell>
-                                <TableCell className="text-right">
-                                  <Button
-                                    variant="destructive"
-                                    size="sm"
-                                    onClick={() => handleDeleteRecruiter(rec._id)}
-                                    className="h-8"
-                                  >
-                                    <Trash2 className="h-4 w-4 mr-1" />
-                                    Delete
-                                  </Button>
-                                </TableCell>
-                              </TableRow>
-                            ))
-                          ) : (
-                            <TableRow>
-                              <TableCell colSpan="6" className="h-24 text-center text-gray-400">
-                                {recruiters.length === 0
-                                  ? "No recruiters found"
-                                  : "No matching recruiters found"}
-                              </TableCell>
-                            </TableRow>
-                          )}
-                        </TableBody>
-                      </Table>
-                    </ScrollArea>
-                    {totalRecruiterPages > 1 && (
-                      <div className="flex items-center justify-end space-x-2 py-4">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => setCurrentRecruiterPage((prev) => Math.max(prev - 1, 1))}
-                          disabled={currentRecruiterPage === 1}
-                        >
-                          Previous
-                        </Button>
-                        <span className="text-sm text-gray-400">
-                          Page {currentRecruiterPage} of {totalRecruiterPages}
-                        </span>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => setCurrentRecruiterPage((prev) => Math.min(prev + 1, totalRecruiterPages))}
-                          disabled={currentRecruiterPage === totalRecruiterPages}
-                        >
-                          Next
-                        </Button>
-                      </div>
-                    )}
-                  </>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="requests">
-            <Card className="bg-gray-950 border-gray-800">
-              <CardHeader>
-                <CardTitle className="text-xl text-white">Recruiter Approval Requests</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {loading.requests ? (
-                  <div className="space-y-4">
-                    {[...Array(3)].map((_, i) => (
-                      <Skeleton key={i} className="h-32 w-full bg-gray-800 rounded-lg" />
-                    ))}
-                  </div>
-                ) : recruiterRequests.length > 0 ? (
-                  <div className="space-y-4">
-                    {recruiterRequests.map((req) => (
-                      <Card key={req._id} className="bg-gray-900 border-gray-800">
-                        <CardContent className="p-6">
-                          <div className="flex flex-col md:flex-row gap-6">
-                            <div className="flex items-center gap-4">
-                              <Avatar className="h-16 w-16 border-2 border-blue-500">
-                                <AvatarImage src={req.profile?.profilePhoto} />
-                                <AvatarFallback className="bg-gray-800 text-blue-400">
-                                  {getInitials(req.companyname)}
-                                </AvatarFallback>
-                              </Avatar>
-                              <div>
-                                <h3 className="text-lg font-semibold text-white">{req.companyname}</h3>
-                                <p className="text-sm text-gray-400">{req.email}</p>
-                                <div className="mt-2 flex flex-wrap gap-2">
-                                  <Badge variant="outline" className="text-xs bg-gray-700 text-gray-400">
-                                    CIN: {req.cinnumber}
-                                  </Badge>
-                                  <Badge variant="outline" className="text-xs bg-gray-700 text-gray-400">
-                                    Phone: {req.phonenumber || "N/A"}
-                                  </Badge>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="flex-1">
-                              <p className="text-sm text-gray-300 mb-4">
-                                <span className="font-medium text-white">Address:</span> {req.companyaddress}
-                              </p>
-                              <div className="flex gap-3">
-                                <Button
-                                  onClick={() => handleApprove(req._id)}
-                                  className="bg-green-600 hover:bg-green-700 text-white"
-                                >
-                                  <Check className="h-4 w-4 mr-2" />
-                                  Approve
-                                </Button>
-                                <Button
-                                  onClick={() => handleReject(req._id)}
-                                  variant="destructive"
-                                >
-                                  <X className="h-4 w-4 mr-2" />
-                                  Reject
-                                </Button>
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-8">
-                    <p className="text-gray-400">No pending recruiter requests</p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-400">No pending recruiter requests</p>
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
 export default Admin;
+
+
