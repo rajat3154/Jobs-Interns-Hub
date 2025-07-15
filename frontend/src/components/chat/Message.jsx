@@ -16,7 +16,7 @@ const Message = ({ message }) => {
         className={`max-w-[70%] rounded-lg px-4 py-2 ${
           isOwnMessage
             ? "bg-blue-600 text-white rounded-tr-none"
-            : "bg-gray-700 text-white rounded-tl-none"
+            : "bg-gray-950 text-white rounded-tl-none"
         }`}
       >
         <p className="text-sm">{message.message}</p>
