@@ -2,28 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "sonner";
-import {
-  Check,
-  X,
-  Search,
-  Users,
-  Briefcase,
-  GraduationCap,
-  Trash2,
-} from "lucide-react";
+import { Check, X, Search, Users, Briefcase, GraduationCap, Trash2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
@@ -260,10 +245,13 @@ const Admin = () => {
       return;
 
     try {
-      const response = await fetch(`${apiUrl}/api/v1/student/${id}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${apiUrl}/api/v1/student/${id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
 
       const data = await response.json();
 
@@ -284,10 +272,13 @@ const Admin = () => {
       return;
 
     try {
-      const response = await fetch(`${apiUrl}/api/v1/recruiter/${id}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${apiUrl}/api/v1/recruiter/${id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
 
       const data = await response.json();
 
@@ -316,7 +307,7 @@ const Admin = () => {
   return (
     <div className="min-h-screen bg-black">
       <Navbar />
-
+      
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-blue-500">Admin Dashboard</h1>
@@ -325,10 +316,7 @@ const Admin = () => {
               <Users className="h-4 w-4 mr-2" />
               {students.length} Students
             </Badge>
-            <Badge
-              variant="outline"
-              className="bg-purple-500/20 text-purple-400"
-            >
+            <Badge variant="outline" className="bg-purple-500/20 text-purple-400">
               <Briefcase className="h-4 w-4 mr-2" />
               {recruiters.length} Recruiters
             </Badge>
@@ -364,9 +352,7 @@ const Admin = () => {
             <Card className="bg-gray-950 border-gray-800">
               <CardHeader>
                 <div className="flex justify-between items-center">
-                  <CardTitle className="text-xl text-white">
-                    Student Management
-                  </CardTitle>
+                  <CardTitle className="text-xl text-white">Student Management</CardTitle>
                   <div className="relative w-64">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                     <Input
@@ -385,10 +371,7 @@ const Admin = () => {
                 {loading.students ? (
                   <div className="space-y-4">
                     {[...Array(5)].map((_, i) => (
-                      <Skeleton
-                        key={i}
-                        className="h-16 w-full bg-gray-800 rounded-lg"
-                      />
+                      <Skeleton key={i} className="h-16 w-full bg-gray-800 rounded-lg" />
                     ))}
                   </div>
                 ) : (
@@ -397,41 +380,22 @@ const Admin = () => {
                       <Table>
                         <TableHeader className="bg-gray-900 sticky top-0">
                           <TableRow>
-                            <TableHead className="text-gray-300">
-                              Profile
-                            </TableHead>
-                            <TableHead className="text-gray-300">
-                              Name
-                            </TableHead>
-                            <TableHead className="text-gray-300">
-                              Email
-                            </TableHead>
-                            <TableHead className="text-gray-300">
-                              Phone
-                            </TableHead>
-                            <TableHead className="text-gray-300">
-                              Skills
-                            </TableHead>
-                            <TableHead className="text-gray-300">
-                              Joined
-                            </TableHead>
-                            <TableHead className="text-right text-gray-300">
-                              Actions
-                            </TableHead>
+                            <TableHead className="text-gray-300">Profile</TableHead>
+                            <TableHead className="text-gray-300">Name</TableHead>
+                            <TableHead className="text-gray-300">Email</TableHead>
+                            <TableHead className="text-gray-300">Phone</TableHead>
+                            <TableHead className="text-gray-300">Skills</TableHead>
+                            <TableHead className="text-gray-300">Joined</TableHead>
+                            <TableHead className="text-right text-gray-300">Actions</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
                           {currentStudents.length > 0 ? (
                             currentStudents.map((student) => (
-                              <TableRow
-                                key={student._id}
-                                className="border-gray-800 hover:bg-gray-900/50"
-                              >
+                              <TableRow key={student._id} className="border-gray-800 hover:bg-gray-900/50">
                                 <TableCell>
                                   <Avatar className="h-10 w-10">
-                                    <AvatarImage
-                                      src={student.profile?.profilePhoto}
-                                    />
+                                    <AvatarImage src={student.profile?.profilePhoto} />
                                     <AvatarFallback>
                                       {getInitials(student.fullname)}
                                     </AvatarFallback>
@@ -448,42 +412,30 @@ const Admin = () => {
                                 </TableCell>
                                 <TableCell>
                                   <div className="flex flex-wrap gap-1">
-                                    {(student.profile?.skills || [])
-                                      .slice(0, 3)
-                                      .map((skill, index) => (
-                                        <Badge
-                                          key={index}
-                                          variant="outline"
-                                          className="text-xs bg-blue-500/20 text-blue-400 border-blue-500/30"
-                                        >
-                                          {skill}
-                                        </Badge>
-                                      ))}
-                                    {(student.profile?.skills || []).length >
-                                      3 && (
-                                      <Badge
-                                        variant="outline"
-                                        className="text-xs bg-gray-700 text-gray-400"
+                                    {(student.profile?.skills || []).slice(0, 3).map((skill, index) => (
+                                      <Badge 
+                                        key={index} 
+                                        variant="outline" 
+                                        className="text-xs bg-blue-500/20 text-blue-400 border-blue-500/30"
                                       >
-                                        +
-                                        {(student.profile?.skills || [])
-                                          .length - 3}
+                                        {skill}
+                                      </Badge>
+                                    ))}
+                                    {(student.profile?.skills || []).length > 3 && (
+                                      <Badge variant="outline" className="text-xs bg-gray-700 text-gray-400">
+                                        +{(student.profile?.skills || []).length - 3}
                                       </Badge>
                                     )}
                                   </div>
                                 </TableCell>
                                 <TableCell className="text-gray-300">
-                                  {new Date(
-                                    student.createdAt
-                                  ).toLocaleDateString()}
+                                  {new Date(student.createdAt).toLocaleDateString()}
                                 </TableCell>
                                 <TableCell className="text-right">
                                   <Button
                                     variant="destructive"
                                     size="sm"
-                                    onClick={() =>
-                                      handleDeleteStudent(student._id)
-                                    }
+                                    onClick={() => handleDeleteStudent(student._id)}
                                     className="h-8"
                                   >
                                     <Trash2 className="h-4 w-4 mr-1" />
@@ -494,10 +446,7 @@ const Admin = () => {
                             ))
                           ) : (
                             <TableRow>
-                              <TableCell
-                                colSpan="7"
-                                className="h-24 text-center text-gray-400"
-                              >
+                              <TableCell colSpan="7" className="h-24 text-center text-gray-400">
                                 {students.length === 0
                                   ? "No students found"
                                   : "No matching students found"}
@@ -512,11 +461,7 @@ const Admin = () => {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() =>
-                            setCurrentStudentPage((prev) =>
-                              Math.max(prev - 1, 1)
-                            )
-                          }
+                          onClick={() => setCurrentStudentPage((prev) => Math.max(prev - 1, 1))}
                           disabled={currentStudentPage === 1}
                         >
                           Previous
@@ -527,11 +472,7 @@ const Admin = () => {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() =>
-                            setCurrentStudentPage((prev) =>
-                              Math.min(prev + 1, totalStudentPages)
-                            )
-                          }
+                          onClick={() => setCurrentStudentPage((prev) => Math.min(prev + 1, totalStudentPages))}
                           disabled={currentStudentPage === totalStudentPages}
                         >
                           Next
@@ -548,9 +489,7 @@ const Admin = () => {
             <Card className="bg-gray-950 border-gray-800">
               <CardHeader>
                 <div className="flex justify-between items-center">
-                  <CardTitle className="text-xl text-white">
-                    Recruiter Management
-                  </CardTitle>
+                  <CardTitle className="text-xl text-white">Recruiter Management</CardTitle>
                   <div className="relative w-64">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                     <Input
@@ -569,10 +508,7 @@ const Admin = () => {
                 {loading.recruiters ? (
                   <div className="space-y-4">
                     {[...Array(5)].map((_, i) => (
-                      <Skeleton
-                        key={i}
-                        className="h-16 w-full bg-gray-800 rounded-lg"
-                      />
+                      <Skeleton key={i} className="h-16 w-full bg-gray-800 rounded-lg" />
                     ))}
                   </div>
                 ) : (
@@ -581,36 +517,21 @@ const Admin = () => {
                       <Table>
                         <TableHeader className="bg-gray-900 sticky top-0">
                           <TableRow>
-                            <TableHead className="text-gray-300">
-                              Logo
-                            </TableHead>
-                            <TableHead className="text-gray-300">
-                              Company
-                            </TableHead>
-                            <TableHead className="text-gray-300">
-                              Email
-                            </TableHead>
+                            <TableHead className="text-gray-300">Logo</TableHead>
+                            <TableHead className="text-gray-300">Company</TableHead>
+                            <TableHead className="text-gray-300">Email</TableHead>
                             <TableHead className="text-gray-300">CIN</TableHead>
-                            <TableHead className="text-gray-300">
-                              Address
-                            </TableHead>
-                            <TableHead className="text-right text-gray-300">
-                              Actions
-                            </TableHead>
+                            <TableHead className="text-gray-300">Address</TableHead>
+                            <TableHead className="text-right text-gray-300">Actions</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
                           {currentRecruiters.length > 0 ? (
                             currentRecruiters.map((rec) => (
-                              <TableRow
-                                key={rec._id}
-                                className="border-gray-800 hover:bg-gray-900/50"
-                              >
+                              <TableRow key={rec._id} className="border-gray-800 hover:bg-gray-900/50">
                                 <TableCell>
                                   <Avatar className="h-10 w-10">
-                                    <AvatarImage
-                                      src={rec.profile?.profilePhoto}
-                                    />
+                                    <AvatarImage src={rec.profile?.profilePhoto} />
                                     <AvatarFallback>
                                       {getInitials(rec.companyname)}
                                     </AvatarFallback>
@@ -632,9 +553,7 @@ const Admin = () => {
                                   <Button
                                     variant="destructive"
                                     size="sm"
-                                    onClick={() =>
-                                      handleDeleteRecruiter(rec._id)
-                                    }
+                                    onClick={() => handleDeleteRecruiter(rec._id)}
                                     className="h-8"
                                   >
                                     <Trash2 className="h-4 w-4 mr-1" />
@@ -645,10 +564,7 @@ const Admin = () => {
                             ))
                           ) : (
                             <TableRow>
-                              <TableCell
-                                colSpan="6"
-                                className="h-24 text-center text-gray-400"
-                              >
+                              <TableCell colSpan="6" className="h-24 text-center text-gray-400">
                                 {recruiters.length === 0
                                   ? "No recruiters found"
                                   : "No matching recruiters found"}
@@ -663,11 +579,7 @@ const Admin = () => {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() =>
-                            setCurrentRecruiterPage((prev) =>
-                              Math.max(prev - 1, 1)
-                            )
-                          }
+                          onClick={() => setCurrentRecruiterPage((prev) => Math.max(prev - 1, 1))}
                           disabled={currentRecruiterPage === 1}
                         >
                           Previous
@@ -678,14 +590,8 @@ const Admin = () => {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() =>
-                            setCurrentRecruiterPage((prev) =>
-                              Math.min(prev + 1, totalRecruiterPages)
-                            )
-                          }
-                          disabled={
-                            currentRecruiterPage === totalRecruiterPages
-                          }
+                          onClick={() => setCurrentRecruiterPage((prev) => Math.min(prev + 1, totalRecruiterPages))}
+                          disabled={currentRecruiterPage === totalRecruiterPages}
                         >
                           Next
                         </Button>
@@ -700,27 +606,19 @@ const Admin = () => {
           <TabsContent value="requests">
             <Card className="bg-gray-950 border-gray-800">
               <CardHeader>
-                <CardTitle className="text-xl text-white">
-                  Recruiter Approval Requests
-                </CardTitle>
+                <CardTitle className="text-xl text-white">Recruiter Approval Requests</CardTitle>
               </CardHeader>
               <CardContent>
                 {loading.requests ? (
                   <div className="space-y-4">
                     {[...Array(3)].map((_, i) => (
-                      <Skeleton
-                        key={i}
-                        className="h-32 w-full bg-gray-800 rounded-lg"
-                      />
+                      <Skeleton key={i} className="h-32 w-full bg-gray-800 rounded-lg" />
                     ))}
                   </div>
                 ) : recruiterRequests.length > 0 ? (
                   <div className="space-y-4">
                     {recruiterRequests.map((req) => (
-                      <Card
-                        key={req._id}
-                        className="bg-gray-900 border-gray-800"
-                      >
+                      <Card key={req._id} className="bg-gray-900 border-gray-800">
                         <CardContent className="p-6">
                           <div className="flex flex-col md:flex-row gap-6">
                             <div className="flex items-center gap-4">
@@ -731,23 +629,13 @@ const Admin = () => {
                                 </AvatarFallback>
                               </Avatar>
                               <div>
-                                <h3 className="text-lg font-semibold text-white">
-                                  {req.companyname}
-                                </h3>
-                                <p className="text-sm text-gray-400">
-                                  {req.email}
-                                </p>
+                                <h3 className="text-lg font-semibold text-white">{req.companyname}</h3>
+                                <p className="text-sm text-gray-400">{req.email}</p>
                                 <div className="mt-2 flex flex-wrap gap-2">
-                                  <Badge
-                                    variant="outline"
-                                    className="text-xs bg-gray-700 text-gray-400"
-                                  >
+                                  <Badge variant="outline" className="text-xs bg-gray-700 text-gray-400">
                                     CIN: {req.cinnumber}
                                   </Badge>
-                                  <Badge
-                                    variant="outline"
-                                    className="text-xs bg-gray-700 text-gray-400"
-                                  >
+                                  <Badge variant="outline" className="text-xs bg-gray-700 text-gray-400">
                                     Phone: {req.phonenumber || "N/A"}
                                   </Badge>
                                 </div>
@@ -755,10 +643,7 @@ const Admin = () => {
                             </div>
                             <div className="flex-1">
                               <p className="text-sm text-gray-300 mb-4">
-                                <span className="font-medium text-white">
-                                  Address:
-                                </span>{" "}
-                                {req.companyaddress}
+                                <span className="font-medium text-white">Address:</span> {req.companyaddress}
                               </p>
                               <div className="flex gap-3">
                                 <Button
@@ -784,9 +669,7 @@ const Admin = () => {
                   </div>
                 ) : (
                   <div className="text-center py-8">
-                    <p className="text-gray-400">
-                      No pending recruiter requests
-                    </p>
+                    <p className="text-gray-400">No pending recruiter requests</p>
                   </div>
                 )}
               </CardContent>
