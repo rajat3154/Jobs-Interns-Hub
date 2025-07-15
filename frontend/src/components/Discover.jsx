@@ -65,7 +65,7 @@ const Discover = () => {
     fetchUsers();
   }, [authUser?._id]);
 
-  const filteredUsers = users.filter(
+  const filteredUsers = (users ?? []).filter(
     (user) =>
       user.displayName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
