@@ -24,6 +24,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
+import { useSelector } from "react-redux";
 
 // Set up the worker for react-pdf
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
@@ -41,6 +42,8 @@ const JobDetails = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [pdfError, setPdfError] = useState(null);
  const apiUrl = import.meta.env.VITE_API_URL;
+  const { user } = useSelector((store) => store.auth);
+  const [alreadyApplied, setAlreadyApplied] = useState(false);
   const fetchJobWithApplicants = async () => {
     try {
       const res = await axios.get(
@@ -59,6 +62,13 @@ const JobDetails = () => {
   useEffect(() => {
     fetchJobWithApplicants();
   }, [jobId]);
+
+  useEffect(() => {
+    if (job && user) {
+      const applied = job.applications?.some(app => app.applicant?._id === user._id);
+      setAlreadyApplied(applied);
+    }
+  }, [job, user]);
 
   const handleStatusUpdate = async (status, appId) => {
     try {
@@ -301,6 +311,12 @@ const JobDetails = () => {
                       <p className="text-white">{job.experience} years</p>
                     </div>
                   </div>
+                  <Button
+                    className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg text-lg"
+                    disabled={alreadyApplied}
+                  >
+                    {alreadyApplied ? 'Already Applied' : 'Apply Now'}
+                  </Button>
                 </div>
               </div>
             </div>
