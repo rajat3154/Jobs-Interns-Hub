@@ -307,7 +307,7 @@ const MessageContainer = ({ selectedUser, unreadCounts, setUnreadCounts, socket,
                                     placeholder="Type a message..."
                                     value={newMessage}
                                     onChange={handleTypingChange}
-                                    className="flex-1 bg-gray-800 border-gray-700 text-white focus:ring-blue-500/50"
+                                    className="flex-1 bg-gray-950 border-gray-700 text-white focus:ring-blue-500/50"
                               />
                               <button
                                     type="submit"
@@ -315,7 +315,7 @@ const MessageContainer = ({ selectedUser, unreadCounts, setUnreadCounts, socket,
                                     className={`p-2 rounded-md ${
                                           newMessage.trim()
                                                 ? "bg-blue-600 hover:bg-blue-700 text-white"
-                                                : "bg-gray-700 text-gray-400 cursor-not-allowed"
+                                                : "bg-gray-950 text-gray-400 cursor-not-allowed"
                                     }`}
                               >
                                     <SendIcon className="h-5 w-5" />

@@ -219,7 +219,7 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
   return (
     <div className={`${sidebarBase} ${sidebarMobile}`}>
       {/* User Profile */}
-      <div className="p-4 border-b border-gray-800">
+      <div className="p-4 border-b border-t border-l border-gray-800">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold text-blue-400">Chats</h2>
          
@@ -388,7 +388,7 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
       </div>
 
       {/* Current User Profile & Logout */}
-      <div className="p-4 border-t border-gray-800 bg-gray-950">
+      <div className="p-4 border-t border-b border-l border-gray-800 bg-gray-950">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Avatar className="h-10 w-10">
