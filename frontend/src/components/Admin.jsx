@@ -2,17 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "sonner";
-import {
-  Check,
-  X,
-  Search,
-  User,
-  Briefcase,
-  Clock,
-  Trash2,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { Check, X, Search, User, Briefcase, Clock, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -62,24 +52,18 @@ const Admin = () => {
     const fetchData = async () => {
       try {
         // Fetch recruiter requests
-        const requestsRes = await fetch(
-          `${apiUrl}/api/v1/admin/recruiter-requests`,
-          {
-            credentials: "include",
-          }
-        );
+        const requestsRes = await fetch(`${apiUrl}/api/v1/admin/recruiter-requests`, {
+          credentials: "include",
+        });
         const requestsData = await requestsRes.json();
         if (requestsData.success) {
           setRecruiterRequests(requestsData.requests);
         }
 
         // Fetch recruiters
-        const recruitersRes = await fetch(
-          `${apiUrl}/api/v1/recruiter/recruiters`,
-          {
-            credentials: "include",
-          }
-        );
+        const recruitersRes = await fetch(`${apiUrl}/api/v1/recruiter/recruiters`, {
+          credentials: "include",
+        });
         const recruitersData = await recruitersRes.json();
         if (recruitersData.success) {
           setRecruiters(recruitersData.recruiters);
@@ -107,9 +91,7 @@ const Admin = () => {
   // Filter and pagination logic
   const filteredStudents = students.filter(
     (student) =>
-      student.fullname
-        ?.toLowerCase()
-        .includes(studentSearchTerm.toLowerCase()) ||
+      student.fullname?.toLowerCase().includes(studentSearchTerm.toLowerCase()) ||
       student.email?.toLowerCase().includes(studentSearchTerm.toLowerCase()) ||
       (student.profile?.skills || []).some((skill) =>
         skill.toLowerCase().includes(studentSearchTerm.toLowerCase())
@@ -118,15 +100,9 @@ const Admin = () => {
 
   const filteredRecruiters = recruiters.filter(
     (recruiter) =>
-      recruiter.companyname
-        ?.toLowerCase()
-        .includes(recruiterSearchTerm.toLowerCase()) ||
-      recruiter.email
-        ?.toLowerCase()
-        .includes(recruiterSearchTerm.toLowerCase()) ||
-      recruiter.cinnumber
-        ?.toLowerCase()
-        .includes(recruiterSearchTerm.toLowerCase())
+      recruiter.companyname?.toLowerCase().includes(recruiterSearchTerm.toLowerCase()) ||
+      recruiter.email?.toLowerCase().includes(recruiterSearchTerm.toLowerCase()) ||
+      recruiter.cinnumber?.toLowerCase().includes(recruiterSearchTerm.toLowerCase())
   );
 
   // Pagination calculations
@@ -139,11 +115,15 @@ const Admin = () => {
     };
   };
 
-  const { currentItems: currentStudents, totalPages: totalStudentPages } =
-    paginate(filteredStudents, currentStudentPage);
+  const {
+    currentItems: currentStudents,
+    totalPages: totalStudentPages,
+  } = paginate(filteredStudents, currentStudentPage);
 
-  const { currentItems: currentRecruiters, totalPages: totalRecruiterPages } =
-    paginate(filteredRecruiters, currentRecruiterPage);
+  const {
+    currentItems: currentRecruiters,
+    totalPages: totalRecruiterPages,
+  } = paginate(filteredRecruiters, currentRecruiterPage);
 
   // Action handlers
   const handleApprove = async (id) => {
@@ -193,10 +173,13 @@ const Admin = () => {
     if (!window.confirm(confirmMessage)) return;
 
     try {
-      const response = await fetch(`${apiUrl}/api/v1/${type}/${id}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${apiUrl}/api/v1/${type}/${id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
 
       const data = await response.json();
       if (!response.ok) throw new Error(data.message);
@@ -207,9 +190,7 @@ const Admin = () => {
         setRecruiters((prev) => prev.filter((r) => r._id !== id));
       }
 
-      toast.success(
-        `${type.charAt(0).toUpperCase() + type.slice(1)} deleted successfully`
-      );
+      toast.success(`${type.charAt(0).toUpperCase() + type.slice(1)} deleted successfully`);
     } catch (error) {
       console.error(`Error deleting ${type}:`, error);
       toast.error(error.message || `Failed to delete ${type}`);
@@ -255,16 +236,10 @@ const Admin = () => {
             <Badge variant="outline" className="border-blue-500 text-blue-400">
               Students: {students.length}
             </Badge>
-            <Badge
-              variant="outline"
-              className="border-green-500 text-green-400"
-            >
+            <Badge variant="outline" className="border-green-500 text-green-400">
               Recruiters: {recruiters.length}
             </Badge>
-            <Badge
-              variant="outline"
-              className="border-yellow-500 text-yellow-400"
-            >
+            <Badge variant="outline" className="border-yellow-500 text-yellow-400">
               Pending: {recruiterRequests.length}
             </Badge>
           </div>
@@ -317,23 +292,16 @@ const Admin = () => {
                             <TableHead>Email</TableHead>
                             <TableHead>Skills</TableHead>
                             <TableHead>Joined</TableHead>
-                            <TableHead className="text-right">
-                              Actions
-                            </TableHead>
+                            <TableHead className="text-right">Actions</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
                           {currentStudents.length > 0 ? (
                             currentStudents.map((student) => (
-                              <TableRow
-                                key={student._id}
-                                className="hover:bg-gray-900/50"
-                              >
+                              <TableRow key={student._id} className="hover:bg-gray-900/50">
                                 <TableCell>
                                   <Avatar className="h-9 w-9">
-                                    <AvatarImage
-                                      src={student.profile?.profilePhoto}
-                                    />
+                                    <AvatarImage src={student.profile?.profilePhoto} />
                                     <AvatarFallback>
                                       {getInitials(student.fullname)}
                                     </AvatarFallback>
@@ -345,40 +313,24 @@ const Admin = () => {
                                 <TableCell>{student.email}</TableCell>
                                 <TableCell>
                                   <div className="flex flex-wrap gap-1 max-w-[200px]">
-                                    {(student.profile?.skills || [])
-                                      .slice(0, 3)
-                                      .map((skill) => (
-                                        <Badge
-                                          key={skill}
-                                          variant="secondary"
-                                          className="text-xs"
-                                        >
-                                          {skill}
-                                        </Badge>
-                                      ))}
-                                    {(student.profile?.skills || []).length >
-                                      3 && (
-                                      <Badge
-                                        variant="outline"
-                                        className="text-xs"
-                                      >
-                                        +
-                                        {(student.profile?.skills || [])
-                                          .length - 3}
+                                    {(student.profile?.skills || []).slice(0, 3).map((skill) => (
+                                      <Badge key={skill} variant="secondary" className="text-xs">
+                                        {skill}
+                                      </Badge>
+                                    ))}
+                                    {(student.profile?.skills || []).length > 3 && (
+                                      <Badge variant="outline" className="text-xs">
+                                        +{(student.profile?.skills || []).length - 3}
                                       </Badge>
                                     )}
                                   </div>
                                 </TableCell>
-                                <TableCell>
-                                  {formatDate(student.createdAt)}
-                                </TableCell>
+                                <TableCell>{formatDate(student.createdAt)}</TableCell>
                                 <TableCell className="text-right">
                                   <Button
                                     variant="destructive"
                                     size="sm"
-                                    onClick={() =>
-                                      handleDeleteUser(student._id, "student")
-                                    }
+                                    onClick={() => handleDeleteUser(student._id, "student")}
                                   >
                                     <Trash2 className="h-4 w-4 mr-1" /> Delete
                                   </Button>
@@ -387,10 +339,7 @@ const Admin = () => {
                             ))
                           ) : (
                             <TableRow>
-                              <TableCell
-                                colSpan={6}
-                                className="h-24 text-center"
-                              >
+                              <TableCell colSpan={6} className="h-24 text-center">
                                 {students.length === 0
                                   ? "No students found"
                                   : "No matching students found"}
@@ -405,11 +354,7 @@ const Admin = () => {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() =>
-                            setCurrentStudentPage((prev) =>
-                              Math.max(prev - 1, 1)
-                            )
-                          }
+                          onClick={() => setCurrentStudentPage((prev) => Math.max(prev - 1, 1))}
                           disabled={currentStudentPage === 1}
                         >
                           <ChevronLeft className="h-4 w-4" />
@@ -421,9 +366,7 @@ const Admin = () => {
                           variant="outline"
                           size="sm"
                           onClick={() =>
-                            setCurrentStudentPage((prev) =>
-                              Math.min(prev + 1, totalStudentPages)
-                            )
+                            setCurrentStudentPage((prev) => Math.min(prev + 1, totalStudentPages))
                           }
                           disabled={currentStudentPage === totalStudentPages}
                         >
@@ -442,9 +385,7 @@ const Admin = () => {
             <Card className="border-gray-800 bg-black">
               <CardHeader>
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                  <CardTitle className="text-xl">
-                    Recruiter Management
-                  </CardTitle>
+                  <CardTitle className="text-xl">Recruiter Management</CardTitle>
                   <div className="relative w-full sm:w-64">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                     <Input
@@ -473,23 +414,16 @@ const Admin = () => {
                             <TableHead>Email</TableHead>
                             <TableHead>CIN</TableHead>
                             <TableHead>Joined</TableHead>
-                            <TableHead className="text-right">
-                              Actions
-                            </TableHead>
+                            <TableHead className="text-right">Actions</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
                           {currentRecruiters.length > 0 ? (
                             currentRecruiters.map((recruiter) => (
-                              <TableRow
-                                key={recruiter._id}
-                                className="hover:bg-gray-900/50"
-                              >
+                              <TableRow key={recruiter._id} className="hover:bg-gray-900/50">
                                 <TableCell>
                                   <Avatar className="h-9 w-9">
-                                    <AvatarImage
-                                      src={recruiter.profile?.profilePhoto}
-                                    />
+                                    <AvatarImage src={recruiter.profile?.profilePhoto} />
                                     <AvatarFallback>
                                       {getInitials(recruiter.companyname)}
                                     </AvatarFallback>
@@ -500,19 +434,12 @@ const Admin = () => {
                                 </TableCell>
                                 <TableCell>{recruiter.email}</TableCell>
                                 <TableCell>{recruiter.cinnumber}</TableCell>
-                                <TableCell>
-                                  {formatDate(recruiter.createdAt)}
-                                </TableCell>
+                                <TableCell>{formatDate(recruiter.createdAt)}</TableCell>
                                 <TableCell className="text-right">
                                   <Button
                                     variant="destructive"
                                     size="sm"
-                                    onClick={() =>
-                                      handleDeleteUser(
-                                        recruiter._id,
-                                        "recruiter"
-                                      )
-                                    }
+                                    onClick={() => handleDeleteUser(recruiter._id, "recruiter")}
                                   >
                                     <Trash2 className="h-4 w-4 mr-1" /> Delete
                                   </Button>
@@ -521,10 +448,7 @@ const Admin = () => {
                             ))
                           ) : (
                             <TableRow>
-                              <TableCell
-                                colSpan={6}
-                                className="h-24 text-center"
-                              >
+                              <TableCell colSpan={6} className="h-24 text-center">
                                 {recruiters.length === 0
                                   ? "No recruiters found"
                                   : "No matching recruiters found"}
@@ -539,11 +463,7 @@ const Admin = () => {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() =>
-                            setCurrentRecruiterPage((prev) =>
-                              Math.max(prev - 1, 1)
-                            )
-                          }
+                          onClick={() => setCurrentRecruiterPage((prev) => Math.max(prev - 1, 1))}
                           disabled={currentRecruiterPage === 1}
                         >
                           <ChevronLeft className="h-4 w-4" />
@@ -555,13 +475,9 @@ const Admin = () => {
                           variant="outline"
                           size="sm"
                           onClick={() =>
-                            setCurrentRecruiterPage((prev) =>
-                              Math.min(prev + 1, totalRecruiterPages)
-                            )
+                            setCurrentRecruiterPage((prev) => Math.min(prev + 1, totalRecruiterPages))
                           }
-                          disabled={
-                            currentRecruiterPage === totalRecruiterPages
-                          }
+                          disabled={currentRecruiterPage === totalRecruiterPages}
                         >
                           <ChevronRight className="h-4 w-4" />
                         </Button>
@@ -597,15 +513,11 @@ const Admin = () => {
                             </AvatarFallback>
                           </Avatar>
                           <div className="flex-1 grid gap-1">
-                            <h3 className="font-semibold text-lg">
-                              {req.companyname}
-                            </h3>
+                            <h3 className="font-semibold text-lg">{req.companyname}</h3>
                             <p className="text-sm text-gray-400">{req.email}</p>
                             <div className="grid grid-cols-2 gap-2 mt-2">
                               <div>
-                                <p className="text-xs text-gray-500">
-                                  CIN Number
-                                </p>
+                                <p className="text-xs text-gray-500">CIN Number</p>
                                 <p className="text-sm">{req.cinnumber}</p>
                               </div>
                               <div>
