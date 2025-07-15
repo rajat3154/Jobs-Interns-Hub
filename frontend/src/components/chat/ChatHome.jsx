@@ -14,7 +14,7 @@ const ChatHome = () => {
   const [unreadCounts, setUnreadCounts] = useState({});
   const socket = useRef(null);
   const apiUrl = import.meta.env.VITE_API_URL;
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   useEffect(() => {
     if (!authUser?._id) return;
 
@@ -51,27 +51,32 @@ const ChatHome = () => {
 
   const handleSelectUser = (user) => {
     dispatch(setSelectedUser(user));
+    setMobileSidebarOpen(false); // Close sidebar on mobile when a user is selected
   };
 
   return (
     <>
       <Navbar />
       <div className="flex bg-black mx-auto h-screen">
-        <div className="flex justify-center w-7xl h-150 bg-black mx-auto relative">
-          {/* Hamburger for mobile */}
+        <div className="flex justify-center w-full max-w-7xl h-full bg-black mx-auto">
+          {/* Mobile Hamburger */}
           <button
-            className="sm:hidden absolute top-4 left-4 z-50 text-gray-300 bg-gray-900 rounded-full p-2 shadow-lg"
-            onClick={() => setSidebarOpen(true)}
+            className="sm:hidden absolute top-20 left-4 z-50 p-2 text-gray-300 bg-gray-900 rounded-full shadow-lg"
+            onClick={() => setMobileSidebarOpen(true)}
+            style={{ display: selectedUser && !mobileSidebarOpen ? 'none' : undefined }}
             aria-label="Open chat list"
-            style={{ display: sidebarOpen ? 'none' : 'block' }}
           >
             <Menu className="h-7 w-7" />
           </button>
 
-          {/* Sidebar (chat list) */}
-          {/* Desktop: always show sidebar; Mobile: show overlay only when open */}
-          {/* Sidebar for desktop */}
-          <div className="hidden sm:block sm:w-1/3 h-full">
+          {/* Sidebar (Chat List) */}
+          <div
+            className={`${
+              mobileSidebarOpen ? 'fixed inset-0 z-40 bg-black bg-opacity-95 flex sm:static sm:w-1/3' :
+              'hidden sm:block sm:w-1/3'
+            } transition-all`}
+            style={{ maxWidth: '100vw' }}
+          >
             <Sidebar
               selectedUser={selectedUser}
               onSelectUser={handleSelectUser}
@@ -79,26 +84,20 @@ const ChatHome = () => {
               setUnreadCounts={setUnreadCounts}
               socket={socket}
             />
+            {/* Close button for mobile sidebar */}
+            <button
+              className="sm:hidden absolute top-4 right-4 z-50 p-2 text-gray-300 bg-gray-900 rounded-full shadow-lg"
+              onClick={() => setMobileSidebarOpen(false)}
+              aria-label="Close chat list"
+            >
+              ×
+            </button>
           </div>
-          {/* Sidebar overlay for mobile */}
-          {sidebarOpen && (
-            <div className="fixed inset-0 z-40 bg-black bg-opacity-90 w-4/5 max-w-xs h-full sm:hidden transition-transform duration-300">
-              <Sidebar
-                selectedUser={selectedUser}
-                onSelectUser={(user) => {
-                  handleSelectUser(user);
-                  setSidebarOpen(false);
-                }}
-                unreadCounts={unreadCounts}
-                setUnreadCounts={setUnreadCounts}
-                socket={socket}
-                onClose={() => setSidebarOpen(false)}
-              />
-            </div>
-          )}
 
-          {/* Chat window */}
-          <div className="flex-1 flex flex-col h-full w-full sm:w-2/3">
+          {/* Chat Window */}
+          <div
+            className={`flex-1 h-full ${mobileSidebarOpen && !selectedUser ? 'hidden' : 'block'}`}
+          >
             <MessageContainer
               selectedUser={selectedUser}
               unreadCounts={unreadCounts}
