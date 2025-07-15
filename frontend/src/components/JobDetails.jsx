@@ -311,19 +311,14 @@ const JobDetails = () => {
                       <p className="text-white">{job.experience} years</p>
                     </div>
                   </div>
-                  <Button
-                    className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg text-lg"
-                    disabled={alreadyApplied}
-                  >
-                    {alreadyApplied ? 'Already Applied' : 'Apply Now'}
-                  </Button>
+               
                 </div>
               </div>
             </div>
           </div>
 
           {/* Applicants Section */}
-          <div className="bg-gray-900/50 rounded-xl p-6 border border-gray-800">
+          <div className="bg-gray-950/50 rounded-xl p-6 border border-gray-800">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-white">
                 Applicants ({job.applications?.length || 0})
@@ -473,7 +468,7 @@ const JobDetails = () => {
                                 <MoreHorizontal className="h-4 w-4" />
                               </Button>
                             </PopoverTrigger>
-                            <PopoverContent className="bg-gray-900 border border-gray-800 text-white rounded-lg shadow-lg p-2 w-40">
+                            <PopoverContent className="bg-gray-950 border border-gray-800 text-white rounded-lg shadow-lg p-2 w-40">
                               {shortlistingStatus.map((status, index) => (
                                 <div
                                   key={index}
