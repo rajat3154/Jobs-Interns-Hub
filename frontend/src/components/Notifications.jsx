@@ -290,12 +290,17 @@ const Notifications = () => {
                         {(notification.sender?.fullname || notification.sender?.companyname || 'U').charAt(0)}
                       </AvatarFallback>
                     </Avatar>
-                    <span className="font-semibold text-white text-base truncate">
-                      {notification.sender?.fullname || notification.sender?.companyname || 'User'}
-                    </span>
+                    <div className="flex flex-col">
+                      <span className="font-semibold text-white text-base truncate">
+                        {notification.sender?.fullname || notification.sender?.companyname || 'User'}
+                      </span>
+                      <span className="text-xs text-gray-400 truncate">
+                        {notification.sender?.email || ''}
+                      </span>
+                    </div>
                   </div>
                   <div className="flex-shrink-0">
-                    {getNotificationIcon(notification.type)}
+                    {/* Removed getNotificationIcon(notification.type) */}
                   </div>
                   <div className="flex-grow">
                     <div className="flex justify-between items-start">
