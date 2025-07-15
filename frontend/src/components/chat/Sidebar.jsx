@@ -219,8 +219,8 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
   return (
     <div className={`${sidebarBase} ${sidebarMobile}`}>
       {/* Mobile close button */}
-      <div className="sm:hidden flex justify-end p-4">
-        <button onClick={() => setSidebarOpen(false)} aria-label="Close chat list">
+      <div className="flex justify-end p-4 sm:hidden">
+        <button onClick={() => setSidebarOpen(false)} aria-label="Close chat list" className="sm:hidden">
           <X className="h-7 w-7 text-gray-300" />
         </button>
       </div>
