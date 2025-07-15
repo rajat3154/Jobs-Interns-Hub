@@ -150,7 +150,7 @@ const JobDetails = () => {
          
 
           {/* Job Header */}
-          <div className="bg-gray-900/50 rounded-xl p-6 mb-8 border border-gray-800">
+          <div className="bg-gray-950 rounded-xl p-6 mb-8 border border-gray-800">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="flex items-start gap-4">
                 <Avatar className="h-16 w-16 border-2 border-blue-500/50">
@@ -185,7 +185,7 @@ const JobDetails = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
             {/* Main Job Content */}
             <div className="lg:col-span-2">
-              <div className="bg-gray-900/50 rounded-xl p-6 border border-gray-800 mb-6">
+              <div className="bg-gray-950 rounded-xl p-6 border border-gray-800 mb-6">
                 <h2 className="text-xl font-semibold mb-4 text-white border-b border-gray-700 pb-3">
                   Job Description
                 </h2>
@@ -214,7 +214,7 @@ const JobDetails = () => {
 
               {/* Analytics Cards */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <div className="bg-gray-900/50 p-4 rounded-lg border border-gray-800">
+                <div className="bg-gray-950 p-4 rounded-lg border border-gray-800">
                   <div className="flex items-center justify-between">
                     <h3 className="text-gray-400 text-sm">Total Applicants</h3>
                     <User className="h-4 w-4 text-blue-400" />
@@ -260,7 +260,7 @@ const JobDetails = () => {
 
             {/* Job Summary Sidebar */}
             <div className="lg:col-span-1">
-              <div className="bg-gray-900/50 rounded-xl p-6 border border-gray-800">
+              <div className="bg-gray-950 rounded-xl p-6 border border-gray-800">
                 <h2 className="text-xl font-semibold mb-4 text-white border-b border-gray-700 pb-3">
                   Job Summary
                 </h2>
