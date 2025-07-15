@@ -60,7 +60,7 @@ const ChatHome = () => {
         <div className="flex justify-center w-7xl h-150 bg-black mx-auto relative">
           {/* Hamburger for mobile */}
           <button
-            className="absolute top-4 left-4 z-50 sm:hidden text-gray-300"
+            className="absolute top-4 left-4 z-50 text-gray-300 sm:hidden"
             onClick={() => setSidebarOpen(true)}
             aria-label="Open chat list"
             style={{ display: sidebarOpen ? 'none' : 'block' }}
