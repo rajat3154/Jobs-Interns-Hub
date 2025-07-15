@@ -281,71 +281,65 @@ const Notifications = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
-                  className={`mb-4 p-4 rounded-lg border ${
-                    notification.read
-                      ? "bg-black border-gray-800"
-                      : "bg-black border-blue-800 shadow-sm"
-                  }`}
+                  className="w-full max-w-full sm:max-w-2xl mx-auto bg-gray-900 rounded-lg shadow border border-gray-800 p-4 mb-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 text-left break-words"
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0">
-                      {getNotificationIcon(notification.type)}
-                    </div>
-                    <div className="flex-grow">
-                      <div className="flex justify-between items-start">
-                        <h3 className="font-semibold text-gray-100">
-                          {notification.title}
-                        </h3>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDeleteNotification(notification._id);
-                          }}
-                          className="text-gray-500 hover:text-red-400"
-                        >
-                          <X className="w-4 h-4" />
-                        </Button>
-                      </div>
-                      <p className="text-gray-400 mt-1">
-                        {notification.message}
-                      </p>
-                      <div className="mt-2 text-sm text-gray-500">
-                        {new Date(notification.createdAt).toLocaleDateString(
-                          "en-US",
-                          {
-                            day: "numeric",
-                            month: "short",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          }
-                        )}
-                      </div>
-                      {notification.link && (
-                        <Link
-                          to={notification.link}
-                          className="mt-3 inline-block text-blue-400 text-sm hover:underline"
-                          onClick={() => handleMarkAsRead(notification._id)}
-                        >
-                          View details
-                        </Link>
-                      )}
-                    </div>
-                    {!notification.read && (
+                  <div className="flex-shrink-0">
+                    {getNotificationIcon(notification.type)}
+                  </div>
+                  <div className="flex-grow">
+                    <div className="flex justify-between items-start">
+                      <h3 className="font-semibold text-gray-100">
+                        {notification.title}
+                      </h3>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleMarkAsRead(notification._id);
+                          handleDeleteNotification(notification._id);
                         }}
-                        className="flex-shrink-0 text-blue-400 hover:bg-blue-900/30"
+                        className="text-gray-500 hover:text-red-400"
                       >
-                        Mark as read
+                        <X className="w-4 h-4" />
                       </Button>
+                    </div>
+                    <p className="text-gray-400 mt-1">
+                      {notification.message}
+                    </p>
+                    <div className="mt-2 text-sm text-gray-500">
+                      {new Date(notification.createdAt).toLocaleDateString(
+                        "en-US",
+                        {
+                          day: "numeric",
+                          month: "short",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        }
+                      )}
+                    </div>
+                    {notification.link && (
+                      <Link
+                        to={notification.link}
+                        className="mt-3 inline-block text-blue-400 text-sm hover:underline"
+                        onClick={() => handleMarkAsRead(notification._id)}
+                      >
+                        View details
+                      </Link>
                     )}
                   </div>
+                  {!notification.read && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleMarkAsRead(notification._id);
+                      }}
+                      className="flex-shrink-0 text-blue-400 hover:bg-blue-900/30"
+                    >
+                      Mark as read
+                    </Button>
+                  )}
                 </motion.div>
               ))
             )}
