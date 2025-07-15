@@ -69,23 +69,30 @@ const ChatHome = () => {
           </button>
 
           {/* Sidebar (chat list) */}
-          <div
-            className={`fixed inset-0 z-40 bg-black bg-opacity-90 transition-transform duration-300 sm:static sm:bg-transparent sm:z-auto sm:translate-x-0 ${
-              sidebarOpen ? 'translate-x-0' : '-translate-x-full sm:translate-x-0'
-            } w-4/5 max-w-xs sm:w-1/3 h-full sm:h-auto`}
-            style={{ display: sidebarOpen || window.innerWidth >= 640 ? 'block' : 'none' }}
-          >
-            <Sidebar
-              selectedUser={selectedUser}
-              onSelectUser={(user) => {
-                handleSelectUser(user);
-                setSidebarOpen(false);
-              }}
-              unreadCounts={unreadCounts}
-              setUnreadCounts={setUnreadCounts}
-              socket={socket}
-              onClose={() => setSidebarOpen(false)}
-            />
+          {/* Desktop: always show sidebar; Mobile: show overlay only when open */}
+          <div>
+            <div
+              className={`
+                sm:block
+                ${
+                  sidebarOpen
+                    ? 'fixed inset-0 z-40 bg-black bg-opacity-90 transition-transform duration-300 w-4/5 max-w-xs h-full sm:static sm:bg-transparent sm:z-auto sm:w-1/3 sm:h-auto sm:translate-x-0'
+                    : 'hidden sm:block sm:w-1/3'
+                }
+              `}
+            >
+              <Sidebar
+                selectedUser={selectedUser}
+                onSelectUser={(user) => {
+                  handleSelectUser(user);
+                  setSidebarOpen(false);
+                }}
+                unreadCounts={unreadCounts}
+                setUnreadCounts={setUnreadCounts}
+                socket={socket}
+                onClose={() => setSidebarOpen(false)}
+              />
+            </div>
           </div>
 
           {/* Chat window */}
