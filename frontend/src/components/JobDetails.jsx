@@ -318,7 +318,7 @@ const JobDetails = () => {
           </div>
 
           {/* Applicants Section */}
-          <div className="bg-gray-950/50 rounded-xl p-6 border border-gray-800">
+          <div className="bg-gray-950 rounded-xl p-6 border border-gray-800">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-white">
                 Applicants ({job.applications?.length || 0})
