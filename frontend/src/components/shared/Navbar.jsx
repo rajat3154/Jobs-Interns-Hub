@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { LogOut, User2, Menu } from "lucide-react";
+import { LogOut, User2, Menu, X } from "lucide-react";
 import axios from "axios";
 import { USER_API_END_POINT } from "@/utils/constant";
 import { useDispatch, useSelector } from "react-redux";
@@ -46,7 +46,18 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Desktop Nav */}
+        {/* Hamburger for mobile */}
+        <div className="flex items-center sm:hidden">
+          <button
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
+            className="text-gray-300 focus:outline-none"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
+          </button>
+        </div>
+
+        {/* Desktop Menu */}
         <div className="hidden sm:flex items-center gap-6">
           <ul className="flex font-medium items-center gap-5 text-gray-300">
             {user?.role === "recruiter" && (
@@ -241,114 +252,78 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Hamburger for mobile - only visible below sm */}
-        <button
-          className="sm:hidden flex items-center text-white focus:outline-none"
-          onClick={() => setMobileMenuOpen((open) => !open)}
-          aria-label="Toggle menu"
-        >
-          <Menu className="h-7 w-7" />
-        </button>
-
-        {/* Mobile Nav */}
+        {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="fixed inset-0 z-50 bg-black bg-opacity-95 flex flex-col items-center justify-start pt-24 px-8 sm:hidden transition-all">
+          <div className="fixed inset-0 z-50 bg-black bg-opacity-95 flex flex-col items-center justify-start pt-24 px-6 sm:hidden transition-all">
             <ul className="flex flex-col gap-6 text-lg font-medium text-gray-300 w-full items-center">
               {user?.role === "recruiter" && (
                 <>
                   <li>
-                    <Link to="/discover" className="hover:text-white transition duration-300" onClick={() => setMobileMenuOpen(false)}>
-                      Peoples
-                    </Link>
+                    <Link to="/discover" onClick={() => setMobileMenuOpen(false)} className="hover:text-white transition duration-300 cursor-pointer">Peoples</Link>
                   </li>
                   <li>
-                    <Link to="/notifications" className="hover:text-white transition duration-300" onClick={() => setMobileMenuOpen(false)}>
-                      Notifications
-                    </Link>
+                    <Link to="/notifications" onClick={() => setMobileMenuOpen(false)} className="hover:text-white transition duration-300 cursor-pointer">Notifications</Link>
                   </li>
                   <li>
-                    <Link to="/messages" className="hover:text-white transition duration-300" onClick={() => setMobileMenuOpen(false)}>
-                      Messages
-                    </Link>
+                    <Link to="/messages" onClick={() => setMobileMenuOpen(false)} className="hover:text-white transition duration-300 cursor-pointer">Messages</Link>
                   </li>
                 </>
               )}
               {user?.role === "student" && (
                 <>
                   <li>
-                    <Link to="/" className="hover:text-white transition duration-300" onClick={() => setMobileMenuOpen(false)}>
-                      Home
-                    </Link>
+                    <Link to="/" onClick={() => setMobileMenuOpen(false)} className="hover:text-white transition duration-300 cursor-pointer">Home</Link>
                   </li>
                   <li>
-                    <Link to="/discover" className="hover:text-white transition duration-300" onClick={() => setMobileMenuOpen(false)}>
-                      Peoples
-                    </Link>
+                    <Link to="/discover" onClick={() => setMobileMenuOpen(false)} className="hover:text-white transition duration-300 cursor-pointer">Peoples</Link>
                   </li>
                   <li>
-                    <Link to="/jobs" className="hover:text-white transition duration-300" onClick={() => setMobileMenuOpen(false)}>
-                      Jobs
-                    </Link>
+                    <Link to="/jobs" onClick={() => setMobileMenuOpen(false)} className="hover:text-white transition duration-300 cursor-pointer">Jobs</Link>
                   </li>
                   <li>
-                    <Link to="/internships" className="hover:text-white transition duration-300" onClick={() => setMobileMenuOpen(false)}>
-                      Internships
-                    </Link>
+                    <Link to="/internships" onClick={() => setMobileMenuOpen(false)} className="hover:text-white transition duration-300 cursor-pointer">Internships</Link>
                   </li>
                   <li>
-                    <Link to="/messages" className="hover:text-white transition duration-300" onClick={() => setMobileMenuOpen(false)}>
-                      Messages
-                    </Link>
+                    <Link to="/messages" onClick={() => setMobileMenuOpen(false)} className="hover:text-white transition duration-300 cursor-pointer">Messages</Link>
                   </li>
                   <li>
-                    <Link to="/notifications" className="hover:text-white transition duration-300" onClick={() => setMobileMenuOpen(false)}>
-                      Notifications
-                    </Link>
+                    <Link to="/notifications" onClick={() => setMobileMenuOpen(false)} className="hover:text-white transition duration-300 cursor-pointer">Notifications</Link>
+                  </li>
+                </>
+              )}
+              {!user && (
+                <>
+                  <li>
+                    <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="hover:text-white transition duration-300 cursor-pointer">Login</Link>
+                  </li>
+                  <li>
+                    <Link to="/signup" onClick={() => setMobileMenuOpen(false)} className="hover:text-white transition duration-300 cursor-pointer">Signup</Link>
                   </li>
                 </>
               )}
             </ul>
-            <div className="mt-8 flex flex-col gap-4 w-full items-center">
-              {!user ? (
-                <>
-                  <Link to="/login" className="w-full" onClick={() => setMobileMenuOpen(false)}>
-                    <Button variant="outline" className="w-full border-gray-500 text-white hover:bg-gray-700 hover:text-white cursor-pointer">
-                      Login
-                    </Button>
-                  </Link>
-                  <Link to="/signup" className="w-full" onClick={() => setMobileMenuOpen(false)}>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-500 text-white cursor-pointer">
-                      Signup
-                    </Button>
-                  </Link>
-                </>
-              ) : (
-                <div className="flex flex-col items-center gap-2 w-full">
-                  <Avatar className="w-12 h-12 rounded-full border border-gray-500 mx-auto">
+            {user && (
+              <div className="mt-8 flex flex-col items-center gap-4 w-full">
+                <div className="flex items-center gap-3">
+                  <Avatar className="w-10 h-10 rounded-full border border-gray-500">
                     <AvatarImage src={user?.profile?.profilePhoto || "/default-profile.png"} alt="Profile Picture" />
                     <AvatarFallback>
                       {(user?.fullname || user?.companyname || "U").split(" ").map((word) => word[0]).join("").toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="text-center">
-                    <h4 className="font-medium text-lg text-white">
-                      {user?.role === "recruiter" ? user.companyname : user.fullname}
-                    </h4>
-                    <p className="text-sm text-gray-400">{user?.email}</p>
-                  </div>
-                  <div className="flex flex-col gap-2 w-full mt-2">
-                    <Link to={user?.role === "recruiter" ? "/recruiter/profile" : "/profile"} className="w-full" onClick={() => setMobileMenuOpen(false)}>
-                      <Button variant="outline" className="w-full text-gray-300 border-gray-500 hover:bg-gray-700 hover:text-white cursor-pointer">
-                        View Profile
-                      </Button>
-                    </Link>
-                    <Button onClick={() => { logoutHandler(); setMobileMenuOpen(false); }} variant="outline" className="w-full text-gray-300 border-gray-500 hover:bg-gray-700 hover:text-white cursor-pointer">
-                      Logout
-                    </Button>
+                  <div className="text-left">
+                    <h4 className="font-medium text-base text-white">{user?.role === "recruiter" ? user.companyname : user.fullname}</h4>
+                    <p className="text-xs text-gray-400">{user?.email}</p>
                   </div>
                 </div>
-              )}
-            </div>
+                <div className="flex flex-col gap-2 w-full">
+                  <Button asChild variant="link" className="text-gray-300 w-full text-left px-0" onClick={() => setMobileMenuOpen(false)}>
+                    <Link to={user?.role === "recruiter" ? "/recruiter/profile" : "/profile"}>View Profile</Link>
+                  </Button>
+                  <Button onClick={() => { logoutHandler(); setMobileMenuOpen(false); }} variant="link" className="text-gray-300 w-full text-left px-0">Logout</Button>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
