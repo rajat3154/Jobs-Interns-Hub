@@ -70,17 +70,19 @@ const ChatHome = () => {
 
           {/* Sidebar (chat list) */}
           {/* Desktop: always show sidebar; Mobile: show overlay only when open */}
-          <div>
-            <div
-              className={`
-                sm:block
-                ${
-                  sidebarOpen
-                    ? 'fixed inset-0 z-40 bg-black bg-opacity-90 transition-transform duration-300 w-4/5 max-w-xs h-full sm:static sm:bg-transparent sm:z-auto sm:w-1/3 sm:h-auto sm:translate-x-0'
-                    : 'hidden sm:block sm:w-1/3'
-                }
-              `}
-            >
+          {/* Sidebar for desktop */}
+          <div className="hidden sm:block sm:w-1/3 h-full">
+            <Sidebar
+              selectedUser={selectedUser}
+              onSelectUser={handleSelectUser}
+              unreadCounts={unreadCounts}
+              setUnreadCounts={setUnreadCounts}
+              socket={socket}
+            />
+          </div>
+          {/* Sidebar overlay for mobile */}
+          {sidebarOpen && (
+            <div className="fixed inset-0 z-40 bg-black bg-opacity-90 w-4/5 max-w-xs h-full sm:hidden transition-transform duration-300">
               <Sidebar
                 selectedUser={selectedUser}
                 onSelectUser={(user) => {
@@ -93,7 +95,7 @@ const ChatHome = () => {
                 onClose={() => setSidebarOpen(false)}
               />
             </div>
-          </div>
+          )}
 
           {/* Chat window */}
           <div className="flex-1 flex flex-col h-full w-full sm:w-2/3">
