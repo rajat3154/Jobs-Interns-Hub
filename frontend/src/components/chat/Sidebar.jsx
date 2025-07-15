@@ -7,8 +7,9 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { X } from "lucide-react";
 
-const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, socket }) => {
+const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, socket, sidebarOpen, setSidebarOpen }) => {
   const { user: authUser } = useSelector((state) => state.auth);
   const { onlineUsers = [] } = useSelector((state) => state.auth);
   const [users, setUsers] = useState([]);
@@ -196,8 +197,20 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
     return Array.isArray(onlineUsers) && onlineUsers.includes(userId);
   };
 
+  // Responsive sidebar classes
+  const sidebarBase = "w-full sm:w-1/3 border-r border-gray-800 bg-black bg-opacity-90 overflow-hidden flex flex-col";
+  const sidebarMobile = sidebarOpen
+    ? "fixed inset-0 z-50 bg-black bg-opacity-95 flex flex-col sm:static sm:bg-opacity-90 transition-all"
+    : "hidden sm:flex";
+
   return (
-    <div className="w-full sm:w-1/3 border-r border-gray-800 bg-black bg-opacity-90 overflow-hidden flex flex-col">
+    <div className={`${sidebarBase} ${sidebarMobile}`}>
+      {/* Mobile close button */}
+      <div className="sm:hidden flex justify-end p-4">
+        <button onClick={() => setSidebarOpen(false)} aria-label="Close chat list">
+          <X className="h-7 w-7 text-gray-300" />
+        </button>
+      </div>
       {/* User Profile */}
       <div className="p-4 border-b border-gray-800">
         <div className="flex justify-between items-center mb-4">

@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
-const MessageContainer = ({ selectedUser, unreadCounts, setUnreadCounts, socket }) => {
+const MessageContainer = ({ selectedUser, unreadCounts, setUnreadCounts, socket, sidebarOpen, setSidebarOpen }) => {
       const { user: authUser } = useSelector((state) => state.auth);
       const { onlineUsers = [] } = useSelector((state) => state.auth);
       const { messages } = useSelector((state) => state.message);
@@ -173,24 +173,28 @@ const MessageContainer = ({ selectedUser, unreadCounts, setUnreadCounts, socket 
 
       if (!selectedUser) {
             return (
-                  <div className="flex-1 flex items-center justify-center bg-black">
+                  <div className={`flex-1 flex items-center justify-center bg-black ${sidebarOpen ? 'hidden sm:flex' : ''}`}>
                         <p className="text-gray-400">Select a user to start chatting</p>
                   </div>
             );
       }
 
       return (
-            <div className="flex-1 flex flex-col bg-black">
+            <div className={`flex-1 flex flex-col bg-black ${sidebarOpen ? 'hidden sm:flex' : ''}`}>
                   {/* Chat header */}
                   <div className="p-4 border-b border-gray-800 flex items-center bg-gray-900">
-                        <Button
-                              variant="ghost"
-                              size="icon"
-                              className="sm:hidden mr-2 text-gray-400 hover:text-white"
-                              onClick={() => dispatch(setSelectedUser(null))}
-                        >
-                              <ChevronLeft className="h-5 w-5" />
-                        </Button>
+                        {/* Hamburger for mobile if sidebar is closed */}
+                        {!sidebarOpen && (
+                          <button
+                            className="sm:hidden mr-2 text-gray-400 hover:text-white"
+                            onClick={() => setSidebarOpen(true)}
+                            aria-label="Open chat list"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                            </svg>
+                          </button>
+                        )}
 
                         <Avatar className="h-10 w-10 border-2 border-blue-500">
                               <AvatarImage src={selectedUser.profilePhoto} />
