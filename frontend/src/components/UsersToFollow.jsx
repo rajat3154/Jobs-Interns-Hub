@@ -42,8 +42,8 @@ const UsersToFollow = () => {
         const students = studentsRes.data.data || [];
         const recruiters = recruitersRes.data.recruiters || [];
 
-        console.log("🎓 Students fetched:", students.length);
-        console.log("💼 Recruiters fetched:", recruiters.length);
+        console.log("🎓 Students fetched:", (students ?? []).length);
+        console.log("💼 Recruiters fetched:", (recruiters ?? []).length);
 
         const followingRes = await axios.get(
           `${apiUrl}/api/v1/follow/following/${user._id}/${user.role}`,
@@ -69,18 +69,18 @@ const UsersToFollow = () => {
           })),
         ];
 
-        console.log("🧑‍🤝‍🧑 Total users before filtering:", allUsers.length);
+        console.log("🧑‍🤝‍🧑 Total users before filtering:", (allUsers ?? []).length);
 
-        const filteredUsers = allUsers.filter(
+        const filteredUsers = (allUsers ?? []).filter(
           (u) => u._id !== user?._id && !followingIds.includes(u._id)
         );
 
         console.log(
           "🚫 Filtered users (not self/following):",
-          filteredUsers.length
+          (filteredUsers ?? []).length
         );
 
-        const randomizedUsers = filteredUsers.sort(() => 0.5 - Math.random());
+        const randomizedUsers = (filteredUsers ?? []).sort(() => 0.5 - Math.random());
 
         console.log(
           "🎲 Final randomized users:",
@@ -91,7 +91,7 @@ const UsersToFollow = () => {
           }))
         );
 
-        setUsers(randomizedUsers);
+        setUsers(randomizedUsers ?? []);
       } catch (error) {
         console.error("❌ Error fetching users:", error);
         setError(
@@ -175,7 +175,7 @@ const UsersToFollow = () => {
     );
   }
 
-  if (!users.length) {
+  if (!users || users.length === 0) {
     return (
       <div className="text-center p-6">
         <div className="inline-flex items-center justify-center p-3 mb-3 rounded-full bg-gray-800 mx-auto">

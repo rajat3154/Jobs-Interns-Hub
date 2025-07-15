@@ -6,7 +6,8 @@ import useGetRealTimeMessage from "../hooks/useGetRealTimeMessage";
 
 const Messages = () => {
   const dispatch = useDispatch();
-  const { messages } = useSelector((store) => store.message);
+  const { messages: rawMessages } = useSelector((store) => store.message);
+  const messages = Array.isArray(rawMessages) ? rawMessages : [];
   const { selectedUser } = useSelector((store) => store.auth);
   const messagesEndRef = useRef(null);
 
@@ -28,7 +29,7 @@ const Messages = () => {
   return (
     <div className="flex-1 overflow-y-auto p-4">
       <div className="space-y-4">
-        {Array.isArray(messages) && messages.length > 0 ? (
+        {messages.length > 0 ? (
           messages.map((message) => (
             <Message key={message._id} message={message} />
           ))
