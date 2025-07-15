@@ -76,7 +76,7 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-8 sm:mt-12 flex flex-col xs:flex-row justify-center gap-4 xs:gap-8 text-gray-300 text-xs sm:text-sm"
+          className="mt-8 sm:mt-12 flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 text-gray-300 text-xs sm:text-sm"
         >
           <div className="flex items-center gap-2 justify-center">
             <Rocket className="h-5 w-5 text-green-400" />
