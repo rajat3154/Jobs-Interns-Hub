@@ -7,8 +7,9 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { X } from "lucide-react";
 
-const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, socket }) => {
+const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, socket, onClose }) => {
   const { user: authUser } = useSelector((state) => state.auth);
   const { onlineUsers = [] } = useSelector((state) => state.auth);
   const [users, setUsers] = useState([]);
@@ -197,7 +198,17 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
   };
 
   return (
-    <div className="w-full sm:w-1/3 border-r border-gray-800 bg-black bg-opacity-90 overflow-hidden flex flex-col">
+    <div className="w-full sm:w-1/3 h-full border-r border-gray-800 bg-black bg-opacity-90 overflow-hidden flex flex-col relative">
+      {/* Close button for mobile */}
+      {onClose && (
+        <button
+          className="sm:hidden absolute top-4 right-4 z-50 text-gray-300 bg-gray-900 rounded-full p-2 shadow-lg"
+          onClick={onClose}
+          aria-label="Close chat list"
+        >
+          <X className="h-7 w-7" />
+        </button>
+      )}
       {/* User Profile */}
       <div className="p-4 border-b border-gray-800">
         <div className="flex justify-between items-center mb-4">

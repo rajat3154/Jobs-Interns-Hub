@@ -5,6 +5,7 @@ import { io } from "socket.io-client";
 import Sidebar from "./Sidebar";
 import MessageContainer from "./MessageContainer";
 import Navbar from "../shared/Navbar";
+import { Menu } from "lucide-react";
 
 const ChatHome = () => {
   const { user: authUser } = useSelector((state) => state.auth);
@@ -13,6 +14,7 @@ const ChatHome = () => {
   const [unreadCounts, setUnreadCounts] = useState({});
   const socket = useRef(null);
   const apiUrl = import.meta.env.VITE_API_URL;
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   useEffect(() => {
     if (!authUser?._id) return;
 
@@ -55,20 +57,46 @@ const ChatHome = () => {
     <>
       <Navbar />
       <div className="flex bg-black mx-auto h-screen">
-        <div className="flex justify-center w-7xl h-150 bg-black mx-auto">
-          <Sidebar
-            selectedUser={selectedUser}
-            onSelectUser={handleSelectUser}
-            unreadCounts={unreadCounts}
-            setUnreadCounts={setUnreadCounts}
-            socket={socket}
-          />
-          <MessageContainer
-            selectedUser={selectedUser}
-            unreadCounts={unreadCounts}
-            setUnreadCounts={setUnreadCounts}
-            socket={socket}
-          />
+        <div className="flex justify-center w-7xl h-150 bg-black mx-auto relative">
+          {/* Hamburger for mobile */}
+          <button
+            className="sm:hidden absolute top-4 left-4 z-50 text-gray-300 bg-gray-900 rounded-full p-2 shadow-lg"
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Open chat list"
+            style={{ display: sidebarOpen ? 'none' : 'block' }}
+          >
+            <Menu className="h-7 w-7" />
+          </button>
+
+          {/* Sidebar (chat list) */}
+          <div
+            className={`fixed inset-0 z-40 bg-black bg-opacity-90 transition-transform duration-300 sm:static sm:bg-transparent sm:z-auto sm:translate-x-0 ${
+              sidebarOpen ? 'translate-x-0' : '-translate-x-full sm:translate-x-0'
+            } w-4/5 max-w-xs sm:w-1/3 h-full sm:h-auto`}
+            style={{ display: sidebarOpen || window.innerWidth >= 640 ? 'block' : 'none' }}
+          >
+            <Sidebar
+              selectedUser={selectedUser}
+              onSelectUser={(user) => {
+                handleSelectUser(user);
+                setSidebarOpen(false);
+              }}
+              unreadCounts={unreadCounts}
+              setUnreadCounts={setUnreadCounts}
+              socket={socket}
+              onClose={() => setSidebarOpen(false)}
+            />
+          </div>
+
+          {/* Chat window */}
+          <div className="flex-1 flex flex-col h-full w-full sm:w-2/3">
+            <MessageContainer
+              selectedUser={selectedUser}
+              unreadCounts={unreadCounts}
+              setUnreadCounts={setUnreadCounts}
+              socket={socket}
+            />
+          </div>
         </div>
       </div>
     </>
