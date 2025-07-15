@@ -132,7 +132,7 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
     }
   }, [authUser?._id]);
 
-  const filteredUsers = users.filter((user) =>
+  const filteredUsers = (users ?? []).filter((user) =>
     user.fullName?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -158,8 +158,8 @@ const Sidebar = ({ selectedUser, onSelectUser, unreadCounts, setUnreadCounts, so
     });
   };
 
-  const students = sortUsers(filteredUsers.filter((user) => user.role === "student"));
-  const recruiters = sortUsers(filteredUsers.filter((user) => user.role === "recruiter"));
+  const students = (filteredUsers ?? []).filter((user) => user.role === "student");
+  const recruiters = (filteredUsers ?? []).filter((user) => user.role === "recruiter");
 
   const handleUserSelect = (user) => {
     onSelectUser(user);
