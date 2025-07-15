@@ -296,7 +296,7 @@ const Notifications = () => {
                         {notification.sender?.fullname || notification.sender?.companyname || 'User'}
                       </span>
                       <span className="text-xs text-gray-400 truncate">
-                        {notification.sender?.role || ''}
+                        {notification.sender?.role || ''}.toUpperCase()
                       </span>
                     </div>
                   </div>
