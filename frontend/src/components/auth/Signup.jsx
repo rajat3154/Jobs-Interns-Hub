@@ -133,9 +133,9 @@ const Signup = () => {
       <Navbar />
       <div className="min-h-screen bg-black flex items-center justify-center p-2 sm:p-4">
         <div className="w-full max-w-6xl bg-gradient-to-br from-gray-900 to-black rounded-3xl shadow-2xl border border-gray-800">
-          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:gap-8 p-2 sm:p-8">
-            {/* Stepper - hidden on mobile */}
-            <div className="hidden sm:block sm:col-span-1 md:border-r md:border-gray-800 md:pr-6 mb-4 md:mb-0">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-8 p-2 sm:p-8">
+            {/* Stepper */}
+            <div className="md:border-r md:border-gray-800 md:pr-6 mb-4 md:mb-0">
               <div className="space-y-4 sm:space-y-6">
                 {steps.map((s) => (
                   <div
@@ -168,8 +168,8 @@ const Signup = () => {
               </div>
             </div>
 
-            {/* Main Content - full width on mobile */}
-            <div className="col-span-1 sm:col-span-3 p-2 sm:p-6">
+            {/* Main Content */}
+            <div className="md:col-span-3 p-2 sm:p-6">
               <div className="flex items-center justify-between mb-4 sm:mb-8">
                 {step > 1 && step < 4 && (
                   <Button
