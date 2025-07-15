@@ -30,7 +30,7 @@ const Discover = () => {
       try {
         setLoading(true);
         const [studentsRes, recruitersRes] = await Promise.all([
-          axios.get(`${apiUrl}/api/v1/students`, {
+          axios.get(`${apiUrl}/api/v1/student/students`, {
             withCredentials: true,
           }),
           axios.get(`${apiUrl}/api/v1/recruiter/recruiters`, {
