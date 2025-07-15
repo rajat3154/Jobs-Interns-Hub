@@ -609,7 +609,7 @@ const Profile = () => {
               {followersOpen && (
                 <div
                   id="followers-popup"
-                  className="absolute top-full left-0 mt-2 w-72 bg-black border border-gray-700 rounded-lg shadow-xl z-50"
+                  className="absolute top-full right-0 mt-2 w-full max-w-xs sm:w-72 bg-black border border-gray-700 rounded-lg shadow-xl z-50"
                 >
                   <div className="p-4">
                     <h3 className="font-semibold text-blue-400 mb-3">
