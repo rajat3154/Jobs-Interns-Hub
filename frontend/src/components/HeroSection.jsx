@@ -21,8 +21,7 @@ const HeroSection = () => {
           "https://api.pexels.com/videos/search?query=office+work&per_page=1",
           {
             headers: {
-              Authorization:
-                "563492ad6f91700001000001a5e3b8f3b0a14c7b8b5f3b3c3e3b3f3b",
+              Authorization: "563492ad6f91700001000001a5e3b8f3b0a14c7b8b5f3b3c3e3b3f3b",
             },
           }
         );
@@ -43,9 +42,7 @@ const HeroSection = () => {
         console.error("Error fetching video:", error);
         setVideoError(true);
         // Fallback to a default video
-        setVideoUrl(
-          "https://assets.mixkit.co/videos/preview/mixkit-people-working-in-an-office-2382-large.mp4"
-        );
+        setVideoUrl("https://assets.mixkit.co/videos/preview/mixkit-people-working-in-an-office-2382-large.mp4");
       } finally {
         setLoadingVideo(false);
       }
@@ -68,13 +65,12 @@ const HeroSection = () => {
       }
     };
 
-    if (videoRef.current.readyState >= 3) {
-      // HAVE_FUTURE_DATA
+    if (videoRef.current.readyState >= 3) { // HAVE_FUTURE_DATA
       playVideo();
     } else {
-      videoRef.current.addEventListener("loadeddata", playVideo);
+      videoRef.current.addEventListener('loadeddata', playVideo);
       return () => {
-        videoRef.current?.removeEventListener("loadeddata", playVideo);
+        videoRef.current?.removeEventListener('loadeddata', playVideo);
       };
     }
   }, [videoUrl]);
