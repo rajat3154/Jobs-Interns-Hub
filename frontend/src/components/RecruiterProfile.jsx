@@ -524,7 +524,7 @@ const RecruiterProfile = () => {
             {job.jobType}
           </Badge>
           <Badge className="bg-yellow-500/20 text-yellow-400">
-            {job.salary}
+            {job.salary}/month
           </Badge>
         </div>
       </div>
