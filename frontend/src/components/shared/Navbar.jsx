@@ -46,15 +46,6 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Hamburger for mobile */}
-        <button
-          className="sm:hidden flex items-center text-white focus:outline-none"
-          onClick={() => setMobileMenuOpen((open) => !open)}
-          aria-label="Toggle menu"
-        >
-          <Menu className="h-7 w-7" />
-        </button>
-
         {/* Desktop Nav */}
         <div className="hidden sm:flex items-center gap-6">
           <ul className="flex font-medium items-center gap-5 text-gray-300">
@@ -249,6 +240,15 @@ const Navbar = () => {
             </Popover>
           )}
         </div>
+
+        {/* Hamburger for mobile - only visible below sm */}
+        <button
+          className="sm:hidden flex items-center text-white focus:outline-none"
+          onClick={() => setMobileMenuOpen((open) => !open)}
+          aria-label="Toggle menu"
+        >
+          <Menu className="h-7 w-7" />
+        </button>
 
         {/* Mobile Nav */}
         {mobileMenuOpen && (
