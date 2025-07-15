@@ -687,7 +687,8 @@ const Profile = () => {
               {followingOpen && (
                 <div
                   id="following-popup"
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72 max-w-xs sm:left-0 sm:translate-x-0 sm:w-72 bg-black border border-gray-700 rounded-lg shadow-xl z-50"
+                  className="sm:absolute sm:top-full sm:left-0 sm:mt-2 sm:w-72 sm:max-w-xs bg-black border border-gray-700 rounded-lg shadow-xl z-50
+                  fixed top-1/2 left-1/2 w-full max-w-xs px-2 -translate-x-1/2 -translate-y-1/2 sm:static sm:translate-x-0 sm:translate-y-0"
                 >
                   <div className="p-4">
                     <h3 className="font-semibold text-blue-400 mb-3">
