@@ -80,19 +80,19 @@ const StudentSignup = () => {
 
   return (
     <>
-      <div className="min-h-screen  flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-2 sm:p-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="w-full max-w-md bg-gradient-to-br from-gray-900 to-gray-950 rounded-xl shadow-xl border border-gray-800 p-8"
+          className="w-full max-w-md bg-gradient-to-br from-gray-900 to-gray-950 rounded-xl shadow-xl border border-gray-800 p-4 sm:p-8"
         >
-          <div className="flex items-center justify-center mb-6">
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+          <div className="flex items-center justify-center mb-4 sm:mb-6">
+            <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
               Student Sign Up
             </h1>
           </div>
 
-          <form onSubmit={submitHandler} className="space-y-6">
+          <form onSubmit={submitHandler} className="space-y-4 sm:space-y-6">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}

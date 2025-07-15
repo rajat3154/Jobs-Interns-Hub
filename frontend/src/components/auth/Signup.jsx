@@ -131,16 +131,16 @@ const Signup = () => {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-black flex items-center justify-center p-4">
+      <div className="min-h-screen bg-black flex items-center justify-center p-2 sm:p-4">
         <div className="w-full max-w-6xl bg-gradient-to-br from-gray-900 to-black rounded-3xl shadow-2xl border border-gray-800">
-          <div className="grid md:grid-cols-4 gap-8 p-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-8 p-2 sm:p-8">
             {/* Stepper */}
-            <div className="md:border-r md:border-gray-800 pr-6">
-              <div className="space-y-6">
+            <div className="md:border-r md:border-gray-800 md:pr-6 mb-4 md:mb-0">
+              <div className="space-y-4 sm:space-y-6">
                 {steps.map((s) => (
                   <div
                     key={s.id}
-                    className={`flex items-center space-x-3 p-3 rounded-lg transition-colors ${
+                    className={`flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 rounded-lg transition-colors ${
                       step >= s.id
                         ? "bg-blue-500/10 border border-blue-500/30"
                         : "hover:bg-gray-800/50"
@@ -148,17 +148,17 @@ const Signup = () => {
                     onClick={() => step > s.id && setStep(s.id)}
                   >
                     <div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                      className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center ${
                         step >= s.id
                           ? "bg-blue-500 text-white"
                           : "bg-gray-700 text-gray-400"
                       }`}
                     >
-                      {step > s.id ? <Check size={16} /> : s.icon}
+                      {step > s.id ? <Check size={14} /> : s.icon}
                     </div>
                     <div>
-                      <p className="text-sm text-gray-400">Step {s.id}</p>
-                      <p className="font-medium text-blue-300">{s.title}</p>
+                      <p className="text-xs sm:text-sm text-gray-400">Step {s.id}</p>
+                      <p className="font-medium text-blue-300 text-sm sm:text-base">{s.title}</p>
                     </div>
                     {step === s.id && (
                       <ChevronRight className="ml-auto text-blue-400 animate-pulse" />
@@ -169,8 +169,8 @@ const Signup = () => {
             </div>
 
             {/* Main Content */}
-            <div className="md:col-span-3 p-6">
-              <div className="flex items-center justify-between mb-8">
+            <div className="md:col-span-3 p-2 sm:p-6">
+              <div className="flex items-center justify-between mb-4 sm:mb-8">
                 {step > 1 && step < 4 && (
                   <Button
                     onClick={() => setStep(step - 1)}
