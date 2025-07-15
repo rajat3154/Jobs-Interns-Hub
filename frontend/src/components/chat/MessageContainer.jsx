@@ -268,7 +268,7 @@ const MessageContainer = ({ selectedUser, unreadCounts, setUnreadCounts, socket,
                                                       className={`max-w-xs md:max-w-md rounded-lg px-4 py-2 relative ${
                                                             isSender
                                                                   ? "bg-blue-600 rounded-tr-none"
-                                                                  : "bg-gray-950 rounded-tl-none"
+                                                                  : "bg-gray-900 rounded-tl-none"
                                                       }`}
                                                 >
                                                       <p className="text-white">{message.message}</p>
