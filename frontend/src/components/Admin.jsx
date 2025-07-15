@@ -269,7 +269,7 @@ const Admin = () => {
 
     try {
       const response = await fetch(
-        `${api}/api/v1/recruiter/${id}`,
+        `${apiUrl}/api/v1/recruiter/${id}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -685,3 +685,5 @@ const Admin = () => {
 };
 
 export default Admin;
+
+
